@@ -3,7 +3,7 @@
 }
 
 .marquee-20 {
-  animation: scroll-left 7s linear infinite;
+  animation: scroll-left 8s linear infinite;
 }
 
 @keyframes scroll-left {
