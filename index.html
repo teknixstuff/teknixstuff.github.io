@@ -19,6 +19,7 @@ function dragElement(elmnt) {
   let placeholderElem = document.createElement('div');
   placeholderElem.style.width = elmnt.offsetWidth;
   placeholderElem.style.height = elmnt.offsetHeight;
+  let insetedPlaceholder = false;
 
   function dragMouseDown(e) {
     e = e || window.event;
