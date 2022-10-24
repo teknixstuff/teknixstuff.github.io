@@ -59,7 +59,9 @@ function dragElement(elmnt) {
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     // check for sensor
-    if ((sensorElem.getBoundingClientRect().left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((sensorElem.getBoundingClientRect().left + sensorElem.offsetWidth) <= elmnt.getBoundingClientRect().left))
+    if ((sensorElem.getBoundingClientRect().left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((sensorElem.getBoundingClientRect().left + sensorElem.offsetWidth) <= elmnt.getBoundingClientRect().left)) {
+      alert('DO SOMETHING!');
+    }
   }
 
   function closeDragElement() {
