@@ -19,6 +19,13 @@ function dragElement(elmnt) {
   let placeholderElem = document.createElement('div');
   placeholderElem.style.width = elmnt.offsetWidth;
   placeholderElem.style.height = elmnt.offsetHeight;
+  placeholderElem.style.display = 'none';
+  let sensorElem = document.createElement('div');
+  sensorElem.style.width = elmnt.offsetWidth;
+  sensorElem.style.height = elmnt.offsetHeight;
+  sensorElem.style.left = elmnt.getBoundingClientRect().left;
+  sensorElem.style.top = elmnt.getBoundingClientRect().top;
+  sensorElem.style.position = 'absolute'
   let insetedPlaceholder = false;
 
   function dragMouseDown(e) {
@@ -28,6 +35,7 @@ function dragElement(elmnt) {
     elmnt.style.top = elmnt.getBoundingClientRect().top;
     elmnt.style.position = 'absolute';
     if (!insetedPlaceholder) {
+      elmnt.insertAdjacentElement('beforebegin', sensorElem);
       elmnt.insertAdjacentElement('beforebegin', placeholderElem);
       insetedPlaceholder = true;
     }
