@@ -58,7 +58,7 @@ function dragElement(elmnt) {
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     // check position
-    if ((elem_old_pos.left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((elem_old_pos.left + elem_old_pos.width) <= elmnt.getBoundingClientRect().left)) {
+    if ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) {
       alert('DO SOMETHING!');
     }
   }
