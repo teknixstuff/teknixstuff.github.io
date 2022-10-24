@@ -16,6 +16,9 @@ function dragElement(elmnt) {
     // otherwise, move the DIV from anywhere inside the DIV:
     elmnt.onmousedown = dragMouseDown;
   }
+  let placeholderElem = document.createElement('div');
+  placeholderElem.style.width = elmnt.offsetWidth;
+  placeholderElem.style.height = elmnt.offsetHeight;
 
   function dragMouseDown(e) {
     e = e || window.event;
@@ -23,6 +26,10 @@ function dragElement(elmnt) {
     elmnt.style.left = elmnt.getBoundingClientRect().left;
     elmnt.style.top = elmnt.getBoundingClientRect().top;
     elmnt.style.position = 'absolute';
+    if (!insetedPlaceholder) {
+      elmnt.insertAdjacentElement('beforebegin', placeholderElem);
+      insetedPlaceholder = true;
+    }
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
