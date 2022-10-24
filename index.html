@@ -20,12 +20,11 @@ function dragElement(elmnt) {
   placeholderElem.style.width = elmnt.offsetWidth;
   placeholderElem.style.height = elmnt.offsetHeight;
   placeholderElem.style.display = 'none';
-  let sensorElem = document.createElement('div');
-  sensorElem.style.width = elmnt.offsetWidth;
-  sensorElem.style.height = elmnt.offsetHeight;
-  sensorElem.style.left = elmnt.getBoundingClientRect().left;
-  sensorElem.style.top = elmnt.getBoundingClientRect().top;
-  sensorElem.style.position = 'absolute'
+  let elem_old_pos = {};
+  elem_old_pos.width = elmnt.offsetWidth;
+  elem_old_pos.height = elmnt.offsetHeight;
+  elem_old_pos.left = elmnt.getBoundingClientRect().left;
+  elem_old_pos.top = elmnt.getBoundingClientRect().top;
   let insetedPlaceholder = false;
 
   function dragMouseDown(e) {
@@ -35,7 +34,6 @@ function dragElement(elmnt) {
     elmnt.style.top = elmnt.getBoundingClientRect().top;
     elmnt.style.position = 'absolute';
     if (!insetedPlaceholder) {
-      elmnt.insertAdjacentElement('beforebegin', sensorElem);
       elmnt.insertAdjacentElement('beforebegin', placeholderElem);
       insetedPlaceholder = true;
     }
@@ -59,7 +57,7 @@ function dragElement(elmnt) {
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     // check for sensor
-    if ((sensorElem.getBoundingClientRect().left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((sensorElem.getBoundingClientRect().left + sensorElem.offsetWidth) <= elmnt.getBoundingClientRect().left)) {
+    if ((elem_old_pos.left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((elem_old_pos.left + elem_old_pos.width) <= elmnt.getBoundingClientRect().left)) {
       alert('DO SOMETHING!');
     }
   }
