@@ -20,7 +20,10 @@ function dragElement(elmnt) {
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
-    elmnt.style.position = 'relative';
+    elmnt.style.position = 'absolute';
+    var rect = elmnt.getBoundingClientRect();
+    elmnt.style.top = rect.top + window.scrollY;
+    elmnt.style.top = rect.left + window.scrollX;
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
