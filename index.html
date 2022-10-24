@@ -25,6 +25,7 @@ function dragElement(elmnt) {
   elem_old_pos.height = elmnt.offsetHeight;
   elem_old_pos.left = elmnt.getBoundingClientRect().left;
   elem_old_pos.top = elmnt.getBoundingClientRect().top;
+  debugger;
   let insetedPlaceholder = false;
 
   function dragMouseDown(e) {
@@ -56,7 +57,7 @@ function dragElement(elmnt) {
     // set the element's new position:
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    // check for sensor
+    // check position
     if ((elem_old_pos.left >= (elmnt.getBoundingClientRect().left + elmnt.offsetWidth)) && ((elem_old_pos.left + elem_old_pos.width) <= elmnt.getBoundingClientRect().left)) {
       alert('DO SOMETHING!');
     }
