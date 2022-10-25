@@ -59,7 +59,9 @@ function dragElement(elmnt) {
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     // check position
     if ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) {
-      alert('DO SOMETHING!');
+      placeholderElem.style.display = 'block';
+    } else {
+      placeholderElem.style.display = 'none';
     }
   }
 
