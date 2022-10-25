@@ -74,6 +74,15 @@ function dragElement(elmnt) {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
+    if (
+        ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
+        ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left) &&
+        ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
+        ((elmnt.getBoundingClientRect().top + elmnt.offsetHeight) > elem_old_pos.top)
+      ) {
+      elmnt.style.left = elem_old_pos.left;
+      elmnt.style.top = elem_old_pos.top;
+    }
   }
 }
 </script>
