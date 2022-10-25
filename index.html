@@ -60,7 +60,7 @@ function dragElement(elmnt) {
     // check position
     if (
         ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
-        ((elmnt.left + elmnt.width) > elem_old_pos.left)
+        ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left)
       ) {
       placeholderElem.style.display = 'block';
     } else {
