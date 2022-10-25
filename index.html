@@ -60,7 +60,9 @@ function dragElement(elmnt) {
     // check position
     if (
         ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
-        ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left)
+        ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left) &&
+        ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
+        ((elmnt.getBoundingClientRect().top + elmnt.offsetHeight) > elem_old_pos.top)
       ) {
       placeholderElem.style.display = 'block';
     } else {
