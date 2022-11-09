@@ -20,7 +20,7 @@ function dragElement(elmnt) {
   let placeholderElem = document.createElement('div');
   placeholderElem.style.width = elmnt.offsetWidth;
   placeholderElem.style.height = elmnt.offsetHeight;
-  placeholderElem.style.display = 'none';
+  placeholderElem.style.display = 'block';
   let elem_old_pos = {};
   elem_old_pos.width = elmnt.offsetWidth;
   elem_old_pos.height = elmnt.offsetHeight;
@@ -29,7 +29,7 @@ function dragElement(elmnt) {
   elmnt.style.left = elem_old_pos.left;
   elmnt.style.top = elem_old_pos.top;
   elmnt.style.position = 'absolute';
-  let insetedPlaceholder = false;
+  elmnt.insertAdjacentElement('beforebegin', placeholderElem)
   let element_locked = true;
 
   window.addEventListener('resize',()=>{
@@ -54,13 +54,6 @@ function dragElement(elmnt) {
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
-    elmnt.style.left = elmnt.getBoundingClientRect().left;
-    elmnt.style.top = elmnt.getBoundingClientRect().top;
-    elmnt.style.position = 'absolute';
-    if (!insetedPlaceholder) {
-      elmnt.insertAdjacentElement('beforebegin', placeholderElem);
-      insetedPlaceholder = true;
-    }
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
