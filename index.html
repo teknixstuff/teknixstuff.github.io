@@ -31,11 +31,16 @@ function dragElement(elmnt) {
   window.addEventListener('resize',()=>{
     var old_elem_status = elmnt.style.position;
     elmnt.style.position = 'static';
+    var old_placeholder_status = placeholderElem.style.display;
+    placeholderElem.style.display = 'none';
+    placeholderElem.style.width = elmnt.offsetWidth;
+    placeholderElem.style.height = elmnt.offsetHeight;
     elem_old_pos.width = elmnt.offsetWidth;
     elem_old_pos.height = elmnt.offsetHeight;
     elem_old_pos.left = elmnt.getBoundingClientRect().left;
     elem_old_pos.top = elmnt.getBoundingClientRect().top;
     elmnt.style.position = old_elem_status;
+    placeholderElem.style.display = old_placeholder_status;
   })
 
   function dragMouseDown(e) {
