@@ -28,6 +28,16 @@ function dragElement(elmnt) {
   elem_old_pos.top = elmnt.getBoundingClientRect().top;
   let insetedPlaceholder = false;
 
+  window.addEventListener('resize',()=>{
+    var old_elem_status = elmnt.style.position;
+    elmnt.style.position = 'static';
+    elem_old_pos.width = elmnt.offsetWidth;
+    elem_old_pos.height = elmnt.offsetHeight;
+    elem_old_pos.left = elmnt.getBoundingClientRect().left;
+    elem_old_pos.top = elmnt.getBoundingClientRect().top;
+    elmnt.style.position = old_elem_status;
+  })
+
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
