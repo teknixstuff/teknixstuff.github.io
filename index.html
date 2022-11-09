@@ -26,7 +26,11 @@ function dragElement(elmnt) {
   elem_old_pos.height = elmnt.offsetHeight;
   elem_old_pos.left = elmnt.getBoundingClientRect().left;
   elem_old_pos.top = elmnt.getBoundingClientRect().top;
+  elmnt.style.left = elem_old_pos.left;
+  elmnt.style.top = elem_old_pos.top;
+  elmnt.style.position = 'absolute';
   let insetedPlaceholder = false;
+  let element_locked = true;
 
   window.addEventListener('resize',()=>{
     var old_elem_status = elmnt.style.position;
@@ -41,6 +45,10 @@ function dragElement(elmnt) {
     elem_old_pos.top = elmnt.getBoundingClientRect().top;
     elmnt.style.position = old_elem_status;
     placeholderElem.style.display = old_placeholder_status;
+    if (element_locked) {
+      elmnt.style.left = elem_old_pos.left;
+      elmnt.style.top = elem_old_pos.top;
+    }
   })
 
   function dragMouseDown(e) {
@@ -95,8 +103,11 @@ function dragElement(elmnt) {
         ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
         ((elmnt.getBoundingClientRect().top + elmnt.offsetHeight) > elem_old_pos.top)
       ) {
+      element_locked = true;
       elmnt.style.left = elem_old_pos.left;
       elmnt.style.top = elem_old_pos.top;
+    } else {
+      element_locked = false;
     }
   }
 }
