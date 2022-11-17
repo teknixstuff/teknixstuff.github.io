@@ -40,7 +40,7 @@
 <meta x-type="config" x-name="background-image" x-value="https://i.imgur.com/VvNhMb0.jpg">
 <!-- Custom Scripts -->
 <script>
-function dragElement(elmnt) {
+function dragElement(elmnt, useSnap) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {
     // if present, the header is where you move the DIV from:
@@ -106,15 +106,17 @@ function dragElement(elmnt) {
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     // check position
-    if (
-        ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
-        ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left) &&
-        ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
-        ((elmnt.getBoundingClientRect().top + elmnt.offsetHeight) > elem_old_pos.top)
-      ) {
-      placeholderElem.style.display = 'block';
-    } else {
-      placeholderElem.style.display = 'none';
+    if (useSnap) {
+      if (
+          ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
+          ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left) &&
+          ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
+          ((elmnt.getBoundingClientRect().top + elmnt.offsetHeight) > elem_old_pos.top)
+        ) {
+        placeholderElem.style.display = 'block';
+      } else {
+        placeholderElem.style.display = 'none';
+      }
     }
   }
 
@@ -122,7 +124,7 @@ function dragElement(elmnt) {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
-    if (
+    if (useSnap &&
         ((elem_old_pos.left + elem_old_pos.width) > elmnt.getBoundingClientRect().left) &&
         ((elmnt.getBoundingClientRect().left + elmnt.offsetWidth) > elem_old_pos.left) &&
         ((elem_old_pos.top + elem_old_pos.height) > elmnt.getBoundingClientRect().top) &&
@@ -197,8 +199,8 @@ function dragElement(elmnt) {
         Well, this is my website!
       </p>
     </div>
-    <div class="inline-block rounded backdrop-blur bg-white/25 p-1.5 border-2 w-max h-max">
-      <h2 class="p-1 text-center">Advertisment</h2>
+    <div class="inline-block rounded backdrop-blur bg-white/25 p-1.5 border-2 w-max h-max" id="advert">
+      <h2 class="p-1 text-center" id="advertheader">Advertisment</h2>
       <div class="bg-white/50 inline-block text-center p-1 rounded">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2162389845037702" crossorigin="anonymous"></script>
         <ins class="adsbygoogle"
@@ -212,5 +214,8 @@ function dragElement(elmnt) {
       </div>
     </div>
   </div>
-  <script>dragElement(document.getElementById('infocard'));</script>
+  <script>
+  dragElement(document.getElementById('infocard'), true);
+  dragElement(document.getElementById('advert'), false);
+  </script>
 </body>
