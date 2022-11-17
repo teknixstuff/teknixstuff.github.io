@@ -52,7 +52,7 @@ function dragElement(elmnt, useSnap) {
   let placeholderElem = document.createElement('div');
   placeholderElem.style.width = elmnt.offsetWidth;
   placeholderElem.style.height = elmnt.offsetHeight;
-  placeholderElem.style.display = 'block';
+  placeholderElem.style.display = 'none';
   let elem_old_pos = {};
   elem_old_pos.width = elmnt.offsetWidth;
   elem_old_pos.height = elmnt.offsetHeight;
@@ -142,10 +142,8 @@ function dragElement(elmnt, useSnap) {
   }
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{
-    document.querySelectorAll('.draggable-snap').forEach(elem=>dragElement(elem,true));
-    document.querySelectorAll('.draggable-nosnap').forEach(elem=>dragElement(elem,false));
-  });
+  document.querySelectorAll('.draggable-snap').forEach(elem=>dragElement(elem,true));
+  document.querySelectorAll('.draggable-nosnap').forEach(elem=>dragElement(elem,false));
 });
 </script>
 <!-- Body -->
