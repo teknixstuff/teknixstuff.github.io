@@ -135,9 +135,11 @@ function dragElement(elmnt, useSnap) {
       elmnt.style.position = 'static';
       elmnt.style.left = elem_old_pos.left;
       elmnt.style.top = elem_old_pos.top;
+      placeholderElem.style.display = 'none';
     } else {
       element_locked = false;
       elmnt.style.position = 'fixed';
+      placeholderElem.style.display = 'none';
     }
   }
 }
