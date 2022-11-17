@@ -142,8 +142,10 @@ function dragElement(elmnt, useSnap) {
   }
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.draggable-snap').forEach(elem=>dragElement(elem,true));
-  document.querySelectorAll('.draggable-nosnap').forEach(elem=>dragElement(elem,false));
+  setTimeout(()=>{
+    document.querySelectorAll('.draggable-snap').forEach(elem=>dragElement(elem,true));
+    document.querySelectorAll('.draggable-nosnap').forEach(elem=>dragElement(elem,false));
+  });
 });
 </script>
 <!-- Body -->
