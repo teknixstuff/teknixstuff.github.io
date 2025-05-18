@@ -1183,6 +1183,9 @@ function displayFolder(folder, contentpane, path) {
         var headerPadding = document.createElement("div");
         headerPadding.className = item.getAttribute("class");
         headerPadding.classList.add("dirheader-padding")
+        if (!item.getAttribute("force-legacy")) {
+          headerPadding.classList.add("uiexperiments-dirheader");
+        }
         contentpane.appendChild(headerPadding);
       } else if (item.localName == "group") {
         var contentbox = document.createElement("div");
