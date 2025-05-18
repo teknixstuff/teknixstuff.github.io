@@ -16,6 +16,9 @@
   font-size: 9pt;
   outline: none;
 }
+.uiexperiments * {
+  font-size: 13pt;
+}
 img {
   border-style: none;
 }
@@ -64,7 +67,12 @@ body {
   box-sizing: border-box;
   overflow: auto;
 }
-#contents-pane[type=folder] {
+.uiexperiments #contents-pane {
+  justify-content: space-evenly;
+  align-items: stretch;
+  gap: 16px;
+}
+.content-pane[type=folder] {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -87,6 +95,7 @@ body {
   position: relative;
   min-height: 0;
   overflow: auto;
+  height: 100%;
 }
 #details-pane {
   background: url('/details-pane-bg.png');
@@ -110,8 +119,8 @@ body {
 #command-bar > a:hover {
   border-image: url('/command-bar-btn-hover.png') 3 fill stretch;
 }
-#contents-pane[type=folder] > a {
-  display: inline-block;
+.content-pane[type=folder] > a {
+  display: inline-flex;
   margin: 5px;
   border: 3px solid transparent;
   text-align: center;
@@ -126,41 +135,41 @@ body {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-#contents-pane[type=folder]:not(:focus-within) > a.active {
+.content-pane[type=folder]:not(:focus-within) > a.active {
   border-image: url('/item-desel-bg.png') 3 fill stretch;
 }
-#contents-pane[type=folder]:focus-within > a.active:not(:hover):not(:focus-within) {
+.content-pane[type=folder]:focus-within > a.active:not(:hover):not(:focus-within) {
 }
-#contents-pane[type=folder] > a:hover {
+.content-pane[type=folder] > a:hover {
   border-image: url('/item-hot-bg.png') 3 fill stretch;
 }
-#contents-pane[type=folder] > a:focus-within {
+.content-pane[type=folder] > a:focus-within {
   border-image: url('/item-sel-bg.png') 3 fill stretch;
 }
-#contents-pane[type=folder] > a > div.icon {
+.content-pane[type=folder] > a > div.item-container > div.icon {
   width: max-content;
   height: max-content;
   position: relative;
 }
-#contents-pane[type=folder] > a > div.icon > div.iconCrop {
+.content-pane[type=folder] > a > div.item-container > div.icon > div.iconCrop {
   max-width: var(--icon-size);
   max-height: var(--icon-size);
 }
-#contents-pane[type=folder] > a > div.icon > div.iconCrop > img {
+.content-pane[type=folder] > a > div.item-container > div.icon > div.iconCrop > img {
   max-width: var(--icon-size);
   max-height: var(--icon-size);
 }
-#contents-pane[type=folder] > a > div.icon.video > div.iconCrop {
+.content-pane[type=folder] > a > div.item-container > div.icon.video > div.iconCrop {
   max-width: calc(var(--icon-size)*0.75);
   margin: 0 calc(var(--icon-size)/8);
   overflow: hidden;
 }
-#contents-pane[type=folder] > a > div.icon.video > div.iconCrop > img {
+.content-pane[type=folder] > a > div.item-container > div.icon.video > div.iconCrop > img {
   position: relative;
   left: calc(var(--icon-size)/-8);
   right: calc(var(--icon-size)/-8);
 }
-#contents-pane[type=folder] > a > div.icon > div.videoOverlay {
+.content-pane[type=folder] > a > div.item-container > div.icon > div.videoOverlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -168,7 +177,7 @@ body {
   height: 100%;
   background: url('/video-reel.png') center center / 100% auto no-repeat;
 }
-#contents-pane[type=folder] > a > div.icon.video {
+.content-pane[type=folder] > a > div.item-container > div.icon.video {
   max-height: calc(var(--icon-size) / (96/51));
   /*
   // 96/51 magic constant. found by accidentially applying
@@ -177,25 +186,36 @@ body {
   */
   overflow: hidden;
 }
-#contents-pane[type=folder] > a > div.name {
+.content-pane[type=folder] > a > div.text-container {
+  text-align: left;
+}
+.content-pane[type=folder] > a > div.text-container > div.name {
+  border-bottom: 1px solid #aaaaaa;
+  display: inline;
+  margin-left: 16px;
+}
+.content-pane[type=folder] > a > div.item-container > div.name {
   max-width: var(--icon-size);
   max-height: 4.25em;
   overflow: hidden;
   overflow-wrap: break-word;
 }
-#contents-pane[type=folder] > a:focus-within > div.name {
+.uiexperiments .content-pane[type=folder] > a > div.item-container > div.name {
+  font-size: 12pt;
+}
+.content-pane[type=folder] > a:focus-within > div.item-container > div.name {
   max-height: unset;
 }
-#contents-pane[type=video] {
+.content-pane[type=video] {
   display: flex;
   flex-direction: column;
   background: rgb(247, 247, 247);
 }
-#contents-pane[type=video] > #videoEmbedNoJS {
+.content-pane[type=video] > #videoEmbedNoJS {
   width: 100%;
   height: 100%;
 }
-#contents-pane[type=video] > #videoContainer {
+.content-pane[type=video] > #videoContainer {
   width: calc(100% - 8px);
   flex-grow: 1;
   display: flex;
@@ -205,45 +225,45 @@ body {
   pointer-events: none;
   margin: 4px;
 }
-#contents-pane[type=video] > #videoContainer > #videoFlowContainer {
+.content-pane[type=video] > #videoContainer > #videoFlowContainer {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-#contents-pane[type=video] > #videoContainer > #videoFlowContainer > iframe {
+.content-pane[type=video] > #videoContainer > #videoFlowContainer > iframe {
   width: 300%;
   height: 100%;
   margin-left: -100%;
   border: none;
 }
-#contents-pane[type=video] > #videoControls {
+.content-pane[type=video] > #videoControls {
   width: 100%;
   height: 29px;
   display: flex;
   align-items: center;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsPlay {
+.content-pane[type=video] > #videoControls > #videoControlsPlay {
   width: 29px;
   height: 100%;
   background: url("/video-controls-play.png") center center no-repeat;
   margin-left: 4px;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsPlay:hover {
+.content-pane[type=video] > #videoControls > #videoControlsPlay:hover {
   background: url("/video-controls-play-hot.png") center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsPlay:active {
+.content-pane[type=video] > #videoControls > #videoControlsPlay:active {
   background: url("/video-controls-play-click.png") center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.playing > #videoControlsPlay {
+.content-pane[type=video] > #videoControls.playing > #videoControlsPlay {
   background: url("/video-controls-pause.png") center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.playing > #videoControlsPlay:hover {
+.content-pane[type=video] > #videoControls.playing > #videoControlsPlay:hover {
   background: url("/video-controls-pause-hot.png") center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.playing > #videoControlsPlay:active {
+.content-pane[type=video] > #videoControls.playing > #videoControlsPlay:active {
   background: url("/video-controls-pause-click.png") center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsProgContainer {
+.content-pane[type=video] > #videoControls > #videoControlsProgContainer {
   flex-grow: 1;
   height: 100%;
   margin-left: 4px;
@@ -252,14 +272,14 @@ body {
   align-items: center;
   align-content: center;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsProgContainer > #videoControlsProg {
+.content-pane[type=video] > #videoControls > #videoControlsProgContainer > #videoControlsProg {
   width: 100%;
   height: 1px;
   position: relative;
   border: 2px solid transparent;
   border-image: url('/video-controls-prog.png') 2 fill stretch;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsProgContainer > #videoControlsProg > div {
+.content-pane[type=video] > #videoControls > #videoControlsProgContainer > #videoControlsProg > div {
   position: absolute;
   top: -2px;
   left: -2px;
@@ -267,37 +287,37 @@ body {
   border: 2px solid transparent;
   border-image: url('/video-controls-prog-full.png') 2 fill stretch;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsMute {
+.content-pane[type=video] > #videoControls > #videoControlsMute {
   width: 29px;
   height: 100%;
   position: relative;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls > #videoControlsMute > #videoControlsMuteIcon {
   width: 100%;
   height: 100%;
 }
-#contents-pane[type=video] > #videoControls.vol-none > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls.vol-none > #videoControlsMute > #videoControlsMuteIcon {
   background: url('/vol-none.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.vol-low > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls.vol-low > #videoControlsMute > #videoControlsMuteIcon {
   background: url('/vol-low.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.vol-medium > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls.vol-medium > #videoControlsMute > #videoControlsMuteIcon {
   background: url('/vol-medium.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.vol-high > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls.vol-high > #videoControlsMute > #videoControlsMuteIcon {
   background: url('/vol-high.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls.muted > #videoControlsMute > #videoControlsMuteIcon {
+.content-pane[type=video] > #videoControls.muted > #videoControlsMute > #videoControlsMuteIcon {
   background: url('/vol-mute.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsMute:hover {
+.content-pane[type=video] > #videoControls > #videoControlsMute:hover {
   background: url('/volbtn-hot.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsMute:active {
+.content-pane[type=video] > #videoControls > #videoControlsMute:active {
   background: url('/volbtn-click.png') center center no-repeat;
 }
-#contents-pane[type=video] > #videoControls > #videoControlsRes {
+.content-pane[type=video] > #videoControls > #videoControlsRes {
   width: max-content;
   margin-right: 4px;
 }
@@ -490,6 +510,9 @@ body {
   line-height: 24px;
   transform: translate(0, -1px);
 }
+.uiexperiments .groupheader-text {
+  font-size: 14pt;
+}
 .groupheader-border {
   flex-grow: 1;
   height: 1px;
@@ -530,6 +553,15 @@ h1 {
   font-size: 12pt;
   font-weight: normal;
 }
+.uiexperiments h1 {
+  font-size: 13pt;
+}
+.large-headings h1 {
+  font-size: 20pt;
+}
+.large-headings h2 {
+  font-size: 14pt;
+}
 template {
   display: none;
 }
@@ -565,90 +597,196 @@ template {
     display: none;
   }
 }
-#carbonads, #carbon-blocked {
-  border-top: 1px solid rgb(214, 229, 245);
-  margin-top: auto;
-  padding-top: 4px;
-  flex-shrink: 0;
-}
-.carbon-img, .carbon-text, .carbon-poweredby {
+.dirheader-padding {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 52px;
 }
-.carbon-text, .carbon-poweredby {
-  text-align: center;
-  text-decoration: none;
-  padding-left: 2px;
-  padding-right: 2px;
-  box-sizing: border-box;
+.content-group {
+  width: 100%;
 }
-.carbon-text {
-  padding-top: 8px;
-  padding-bottom: 5px;
-  color: black;
+.uiexperiments .content-group {
+  width: auto;
 }
-.carbon-poweredby {
-  color: #888888;
-  border-top: 1px solid rgb(214, 229, 245);
-}
-.carbon-wrap, .carbon-blocked-wrap {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 8px);
-  box-sizing: border-box;
-  margin-left: 4px;
-  margin-right: 4px;
-  margin-bottom: 4px;
-}
-.carbon-wrap {
+.uiexperiments .group-primary {
   border: 3px solid transparent;
-}
-.carbon-wrap:hover {
   border-image: url('/item-hot-bg.png') 3 fill stretch;
 }
-.carbon-wrap:focus-within {
-  border-image: url('/item-sel-bg.png') 3 fill stretch;
+.uiexperiments .group-secondary {
+  border: 2px solid transparent;
+  border-image: url('/item-desel-bg.png') 2 stretch;
 }
-.carbon-blocked-icon {
-  background: rgb(218, 218, 218) none repeat scroll 0% 0%;
-  width: 100px;
-  padding: 0px 15px;
-  box-sizing: content-box;
-  max-width: 130px;
-  height: 100px;
+.uiexperiments .dirheader-container.uiexperiments-dirheader {
+  position: static;
+  height: auto;
+  max-height: 100%;
+  background: none;
+  flex-direction: column;
+  text-align: center;
+  padding: 0;
 }
-@media (max-width: 34rem) {
-  #carbonads, #carbon-blocked {
-    position: relative;
-  }
-  .carbon-wrap, .carbon-blocked-wrap {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .carbon-img, .carbon-poweredby {
-    width: auto;
-  }
-  .carbon-img > img, .carbon-blocked-icon {
-    border-radius: 2px;
-  }
-  .carbon-poweredby {
-    position: absolute;
-    bottom: 8px;
-    left: 144px;
-    border-top: none;
-    border-bottom: 1px dotted rgb(159, 159, 142);
-  }
-  .carbon-text {
-    text-align: left;
-    padding-left: 8px;
-    padding-top: 2px;
-    box-sizing: border-box;
-    height: 100px;
-    align-items: flex-start;
-  }
+body:not(.uiexperiments) .content-group {
+  flex: 1 1 100% !important;
+}
+body:not(.uiexperiments) .uiexperiments-show {
+  display: none;
+}
+.uiexperiments .uiexperiments-hide {
+  display: none;
+}
+.uiexperiments .dirheader-container.uiexperiments-dirheader > img {
+  max-width: 192px;
+  max-height: 192px;
+  padding-top: 32px;
+}
+.uiexperiments .dirheader-container.uiexperiments-dirheader .dirheader-title {
+  font-size: 24pt;
+  color: rgb(30, 50, 135);
+}
+.uiexperiments .dirheader-container.uiexperiments-dirheader.dirheader-description {
+  font-size: 14pt;
+  color: black;
+  padding-bottom: 32px;
+}
+.uiexperiments .dirheader-container.uiexperiments-dirheader.dirheader-padding {
+  display: none;
+}
+#navigation-pane.accordian.accordian details > details {
+  padding-left: 0;
+}
+#navigation-pane details.container > details {
+  padding-left: 0;
+}
+#navigation-pane details.container > summary {
+  display: none;
+}
+#navigation-pane details.hidden {
+  display: none;
+}
+#navigation-pane.accordian details > summary {
+  height: 30px;
+  line-height: 30px;
+  border: none;
+  padding: 0px;
+  width: calc(100% - 2px);
+  margin-bottom: 1px;
+}
+#navigation-pane.accordian.accordian details > summary::before {
+  height: 24px;
+  transform: none;
+}
+#navigation-pane details.group.group.group.group.group > summary::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  width: calc(100% - 2px);
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 1px;
+  border: none;
+  padding: 0px;
+  z-index: -1;
+  transform: none;
+  border-image: none;
+  background: url('/accordian_group_bg.gif') repeat-x;
+  border-bottom: solid 1px #57566f;
+  height: 30px;
+}
+#navigation-pane details.group.group.group.group.group > summary:hover::before {
+  background: url('/accordian_group_bg_hover.gif') repeat-x;
+}
+#navigation-pane details.group.group.group.group.group > summary .name {
+  font-size: 12pt;
+  color: white;
+}
+#navigation-pane.accordian details > summary .name {
+  font-size: 11pt;
+}
+#navigation-pane.accordian details > summary img {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+#navigation-pane.accordian {
+  position: relative;
+}
+.uiexperiments #left-container {
+  position: relative;
+}
+.uiexperiments #left-container::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-image: url('/accordian_aerostripes.png'), url('/accordian_aerobg.png');
+  background-size: cover;
+}
+#navigation-pane.accordian > details:first-child {
+  margin-top: 1px;
+}
+#navigation-pane.accordian > details:not(:first-child) {
+  margin-top: 0;
+}
+#left-container.accordian {
+  width: 250px;
+}
+#navigation-pane details.group.group.group.group.group > summary .bullet {
+  display: none;
+}
+#navigation-pane details.group.group.group.group.group > summary > div {
+  padding-left: 16px;
+}
+.uiexperiments .uiexperiments-page-compact:not(#nullid) {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1264px;
+  gap: 16px 104px;
+}
+.uiexperiments .uiexperiments-no-bullet-border .groupheader-bullet {
+  display: none;
+}
+.uiexperiments .uiexperiments-no-bullet-border .groupheader-border {
+  display: none;
+}
+.uiexperiments .uiexperiments-page-shift-right {
+  padding-left: 48px;
+}
+.uiexperiments .uiexperiments-bullet-padding > *:not(.groupheader-container) {
+  padding-left: 24px;
+}
+.uiexperiments .uiexperiments-groupheader-large .groupheader-text {
+  font-size: 18pt;
+}
+.uiexperiments .uiexperiments-random-border-thing {
+  border-top: 8px solid transparent;
+  //border-image: radial-gradient(circle,rgba(109, 161, 179, 0.6) 0%, rgba(221, 231, 235, 1) 100%) 360 0 0 0;
+  //border-image: radial-gradient(circle,rgba(71, 119, 214, 0.71) 0%, rgba(234, 233, 245, 1) 100%) 360 0 0 0;
+  border-image: radial-gradient(circle,rgba(125, 145, 201, 0.62) 0%, rgba(175, 186, 221, 0.53) 71%, rgba(234, 233, 245, 1) 100%) 360 0 0 0;
+  padding-top: 24px;
+}
+.flying-windows {
+  border-image: url('/item-hot-bg.png') 3 fill stretch;
+  border-bottom: 3px solid transparent;
+  //mask-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 64px, rgba(255, 255, 255, 1) 100%);
+  position: absolute;
+  z-index: -1;
+}
+body:not(.uiexperiments) .flying-windows {
+  display: none;
+}
+.item-description {
+  max-width: 196px;
+  padding-top: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 0;
+  font-size: 11.5pt;
+}
+.uiexperiments .uiexperiments-nopadding {
+  padding: 0;
 }
 </style>
 <!--[if IE]>
@@ -690,6 +828,8 @@ function navigateItem(item, replace) {
     canonical.href = "https://teknixstuff.com" + getItemPath(item);
   }
   navigateTree(item);
+  var contentpane = document.getElementById("contents-pane");
+  contentpane.className = "content-pane";
   if (item.localName == "folder") {
     displayFolder(item);
   } else if (item.localName == "video") {
@@ -700,6 +840,10 @@ function navigateItem(item, replace) {
     displayLink(item);
   } else if (item.localName == "shortcut") {
     displayShortcut(item);
+  }
+  refreshUIExperiments();
+  if (typeof window.nodePrerender === "undefined" && !replace) {
+    fetch("/count.php?id=page", {cache: "no-store"});
   }
 }
 function applyGlobalCommandBarItems() {
@@ -714,6 +858,14 @@ function applyGlobalCommandBarItems() {
     leftpane.classList.toggle("reveal");
   });
   commandbar.appendChild(menuToggle);
+  var uiToggle = document.createElement("a");
+  uiToggle.id = "ui-toggle";
+  uiToggle.textContent = "UI";
+  uiToggle.href = "javascript:undefined";
+  uiToggle.addEventListener("click", function(){
+    toggleUIExperiments()
+  });
+  commandbar.appendChild(uiToggle);
 }
 function displayLink(link) {
   if (link.hasAttribute("notify")) {
@@ -948,8 +1100,7 @@ function getItemPath(item) {
   }
   return path;
 }
-function navigateTree(folder) {
-  var path = getItemPath(folder);
+function getTreeItem(path) {
   var treeitem = document.getElementById("navigation-pane");
   var pathItems = path.replace(/^\/|\/$/g, '').split("/");
   for (var x = 0; x < pathItems.length; x++) {
@@ -967,18 +1118,25 @@ function navigateTree(folder) {
       }
     }
   }
+  return treeitem;
+}
+function navigateTree(folder) {
+  var path = getItemPath(folder);
+  var treeitem = getTreeItem(path);
   var activeElem = document.querySelector("#navigation-pane .active");
   if (activeElem) {
     activeElem.classList.remove("active");
   }
   treeitem.classList.add("active");
 }
-function displayFolder(folder) {
-  var path = getItemPath(folder);
+function displayFolder(folder, contentpane, path) {
+  path ||= getItemPath(folder);
   applyGlobalCommandBarItems();
   var commandbar = document.getElementById("command-bar");
-  var contentpane = document.getElementById("contents-pane");
-  contentpane.innerHTML = "";
+  contentpane ||= document.getElementById("contents-pane");
+  if (contentpane.id == "contents-pane") {
+    contentpane.innerHTML = "";
+  }
   contentpane.setAttribute("type", "folder");
   for (var i = 0; i < folder.children.length; i++) {
     (function(){
@@ -992,6 +1150,8 @@ function displayFolder(folder) {
         //for (var x = 0; x < children.length; x++) {
         //  contentpane.appendChild(children[i].cloneNode(true));
         //}
+      } else if (item.localName == "pageclass") {
+        contentpane.className += " " + item.textContent;
       } else if (item.localName == "commandbutton") {
         var buttonContainer = document.createElement("a");
         buttonContainer.textContent = item.getAttribute("name");
@@ -999,7 +1159,11 @@ function displayFolder(folder) {
         commandbar.appendChild(buttonContainer);
       } else if (item.localName == "dirheader") {
         var headerContainer = document.createElement("div");
+        headerContainer.className = item.getAttribute("class");
         headerContainer.classList.add("dirheader-container");
+        if (!item.getAttribute("force-legacy")) {
+          headerContainer.classList.add("uiexperiments-dirheader");
+        }
         var headerImage = document.createElement("img");
         headerContainer.appendChild(headerImage);
         headerImage.src = "/icons/full/" + item.getAttribute("icon") + ".ico";
@@ -1017,9 +1181,36 @@ function displayFolder(folder) {
         headerDescription.classList.add("dirheader-description");
         contentpane.appendChild(headerContainer);
         var headerPadding = document.createElement("div");
-        headerPadding.style.width = "100%";
-        headerPadding.style.height = "52px";
+        headerPadding.className = item.getAttribute("class");
+        headerPadding.classList.add("dirheader-padding")
         contentpane.appendChild(headerPadding);
+      } else if (item.localName == "group") {
+        var contentbox = document.createElement("div");
+        contentbox.style.flexGrow = item.getAttribute("grow");
+        contentbox.style.flexShrink = item.getAttribute("shrink");
+        contentbox.style.flexBasis = item.getAttribute("pref-width");
+        contentbox.style.minWidth = item.getAttribute("min-width");
+        contentbox.style.maxWidth = item.getAttribute("max-width");
+        contentbox.setAttribute("class", item.getAttribute("class") || "");
+        contentbox.classList.add("content-pane");
+        contentbox.classList.add("content-group");
+        if (item.hasAttribute("name")) {
+          var headerContainer = document.createElement("div");
+          contentbox.appendChild(headerContainer);
+          headerContainer.classList.add("groupheader-container");
+          var headerBullet = document.createElement("div");
+          headerContainer.appendChild(headerBullet);
+          headerBullet.classList.add("groupheader-bullet");
+          var headerText = document.createElement("div");
+          headerContainer.appendChild(headerText);
+          headerText.classList.add("groupheader-text");
+          headerText.textContent = item.getAttribute("name");
+          var headerBorder = document.createElement("div");
+          headerContainer.appendChild(headerBorder);
+          headerBorder.classList.add("groupheader-border");
+        }
+        displayFolder(item, contentbox, path);
+        contentpane.appendChild(contentbox);
       } else if (item.localName == "groupheader") {
         var headerContainer = document.createElement("div");
         contentpane.appendChild(headerContainer);
@@ -1045,7 +1236,7 @@ function displayFolder(folder) {
         }
         link.tabIndex = 0;
         link.addEventListener("focus", function(){
-          var activeElem = document.querySelector("#contents-pane .active");
+          var activeElem = document.querySelector(".content-pane .active");
           if (activeElem) {
             activeElem.classList.remove("active");
           }
@@ -1058,8 +1249,11 @@ function displayFolder(folder) {
           event.preventDefault();
           navigateItem(item);
         });
+        var itemContainer = document.createElement("div");
+        link.appendChild(itemContainer);
+        itemContainer.classList.add("item-container");
         var iconContainer = document.createElement("div");
-        link.appendChild(iconContainer);
+        itemContainer.appendChild(iconContainer);
         iconContainer.classList.add("icon");
         var iconCrop = document.createElement("div");
         iconContainer.appendChild(iconCrop);
@@ -1076,10 +1270,24 @@ function displayFolder(folder) {
           icon.src = "/icons/full/" + item.getAttribute("icon") + ".ico";
           icon.type = "image/x-icon";
         }
-        var name = document.createElement("div");
-        link.appendChild(name);
-        name.classList.add("name");
-        name.textContent = item.getAttribute("name");
+        if (item.hasAttribute("description")) {
+          var textContainer = document.createElement("div");
+          link.appendChild(textContainer);
+          textContainer.classList.add("text-container");
+          var name = document.createElement("div");
+          textContainer.appendChild(name);
+          name.classList.add("name");
+          name.textContent = item.getAttribute("name");
+          var description = document.createElement("p");
+          textContainer.appendChild(description);
+          description.classList.add("item-description");
+          description.textContent = item.getAttribute("description");
+        } else {
+          var name = document.createElement("div");
+          itemContainer.appendChild(name);
+          name.classList.add("name");
+          name.textContent = item.getAttribute("name");
+        }
       }
     })();
   }
@@ -1153,77 +1361,58 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
-function toggleAds() {
-  if (getCookie('ads') == "show") {
-    document.cookie = "ads=hide; expires=31 Dec 9999 12:00:00 UTC; path=/";
-    var carbon = document.getElementById('carbonads');
-    var carbonjs = document.getElementById('_carbonads_js');
-    var carbonblock = document.getElementById('carbon-blocked');
-    if (carbon) {carbon.remove();}
-    if (carbonjs) {carbonjs.remove();}
-    if (carbonblock) {carbonblock.remove();}
+function toggleUIExperiments() {
+  if (getCookie('uiexperiments') != "off") {
+    document.cookie = "uiexperiments=off; expires=31 Dec 9999 12:00:00 UTC; path=/";
   } else {
-    document.cookie = "ads=show; expires=31 Dec 9999 12:00:00 UTC; path=/";
-    insertCarbonNav();
+    document.cookie = "uiexperiments=on; expires=31 Dec 9999 12:00:00 UTC; path=/";
+  }
+  refreshUIExperiments();
+}
+function tweakNavItem(path, action, on) {
+  var navitem = getTreeItem(path);
+  if (on) {
+    navitem.classList.add(action);
+  } else {
+    navitem.classList.remove(action);
   }
 }
-function insertCarbonNav() {
-  if (typeof window.nodePrerender !== "undefined") {
-    return;
+function refreshUIExperiments() {
+  var on = getCookie('uiexperiments') != "off";
+  tweakNavItem("/Favorites", "container", on);
+  tweakNavItem("/Favorites/Downloads", "hidden", on);
+  tweakNavItem("/Favorites/Desktop", "hidden", on);
+  tweakNavItem("/Libraries", "container", on);
+  tweakNavItem("/Libraries/Music", "hidden", on);
+  tweakNavItem("/Libraries/Pictures", "hidden", on);
+  tweakNavItem("/HomeGroup", "hidden", on);
+  tweakNavItem("/Computer", "hidden", on);
+  tweakNavItem("/Network", "hidden", on);
+  tweakNavItem("/Favorites/Home", "group", on);
+  tweakNavItem("/Favorites/Downloads", "group", on);
+  tweakNavItem("/Libraries/Projects", "group", on);
+  tweakNavItem("/Libraries/Videos", "group", on);
+  tweakNavItem("/About", "hidden", !on);
+  tweakNavItem("/About", "group", on);
+  tweakNavItem("/Contact", "hidden", !on);
+  tweakNavItem("/Contact", "group", on);
+  tweakNavItem("/Donate", "hidden", !on);
+  tweakNavItem("/Donate", "group", on);
+  if (on) {
+    document.getElementById("navigation-pane").classList.add("accordian");
+    document.getElementById("left-container").classList.add("accordian");
+    document.body.classList.add("uiexperiments");
+    try {
+      document.querySelector('.content-pane > a[href="/Favorites/Home/Buy Me a Coffee"]').style.display = 'none';a
+    } catch {}
+  } else {
+    document.getElementById("navigation-pane").classList.remove("accordian");
+    document.getElementById("left-container").classList.remove("accordian");
+    document.body.classList.remove("uiexperiments");
+    try {
+      document.querySelector('.content-pane > a[href="/Favorites/Home/Buy Me a Coffee"]').style.display = '';
+    } catch {}
   }
-  if (document.getElementById('_carbonads_js')) {
-    return;
-  }
-  if (getCookie('ads') != "show") {
-    return;
-  }
-  var leftpane = document.getElementById("left-container");
-  if (matchMedia("(max-width: 34rem)").matches && !leftpane.classList.contains("reveal")) {
-    setTimeout(insertCarbonNav);
-    return;
-  }
-  var carbonScript = document.createElement('script');
-  carbonScript.src = '//cdn.carbonads.com/carbon.js?serve=CWYIC2QJ&placement=carbonclassic-demo&format=classic';
-  carbonScript.id = '_carbonads_js';
-  var leftpane = document.getElementById('left-container');
-  leftpane.appendChild(carbonScript);
-  var carbonBlocked = document.createElement('div');
-  carbonBlocked.id = 'carbon-blocked';
-  carbonBlocked.style.display = 'none';
-  leftpane.appendChild(carbonBlocked);
-  var carbonBlockedWrap = document.createElement('span');
-  carbonBlockedWrap.classList.add('carbon-blocked-wrap');
-  carbonBlocked.appendChild(carbonBlockedWrap);
-  var carbonBlockedImg = document.createElement('span');
-  carbonBlockedImg.classList.add('carbon-img');
-  carbonBlockedWrap.appendChild(carbonBlockedImg);
-  carbonBlockedIcon = document.createElement('span');
-  carbonBlockedIcon.classList.add('carbon-blocked-icon');
-  carbonBlockedImg.appendChild(carbonBlockedIcon);
-  carbonBlockedIcon.innerHTML = '<svg fill="#000000" viewBox="-9 -9 48.00 48.00" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.63"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.36"></g><g id="SVGRepo_iconCarrier"><path d="M19.5 10c.277 0 .5.223.5.5v3c0 .277-.223.5-.5.5s-.5-.223-.5-.5v-3c0-.277.223-.5.5-.5zm-9 0c.277 0 .5.223.5.5v3c0 .277-.223.5-.5.5s-.5-.223-.5-.5v-3c0-.277.223-.5.5-.5zM15 20c-2.104 0-4.186.756-5.798 2.104-.542.4.148 1.223.638.76C11.268 21.67 13.137 21 15 21s3.732.67 5.16 1.864c.478.45 1.176-.364.638-.76C19.186 20.756 17.104 20 15 20zm0-20C6.722 0 0 6.722 0 15c0 8.278 6.722 15 15 15 8.278 0 15-6.722 15-15 0-8.278-6.722-15-15-15zm0 1c7.738 0 14 6.262 14 14s-6.262 14-14 14S1 22.738 1 15 7.262 1 15 1z"></path></g></svg>';
-  var carbonBlockedText = document.createElement('span');
-  carbonBlockedText.classList.add('carbon-text');
-  carbonBlockedText.textContent = 'Want to support this site? Consider disabling your ad-blocker for this domain.';
-  carbonBlockedWrap.appendChild(carbonBlockedText);
-  setTimeout(function fixCarbon() {
-    if (!document.getElementById('carbonads')) {
-      setTimeout(fixCarbon);
-      return;
-    }
-    carbonBlocked.remove();
-    var ad = document.getElementById('carbonads');
-    var carbonImage = ad.querySelector('.carbon-img');
-    var carbonText = ad.querySelector('.carbon-text');
-    var carbonPowered = ad.querySelector('.carbon-poweredby');
-    carbonPowered.style.borderBottom = '';
-  });
-  // purely for adblock detection, not actually executed.
-  // Carbon's JS can't be used for this due to CORS headers.
-  fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {method: 'HEAD'}).catch(function(){
-    if (!document.getElementById('carbonads')) {
-      carbonBlocked.style.display = '';
-    }
-  });
 }
 document.addEventListener("DOMContentLoaded", function(){
   var folder = document.getElementById("fsroot");
@@ -1239,120 +1428,188 @@ document.addEventListener("DOMContentLoaded", function(){
       folderToTreeView(subfolder, navpane);
     }
   }
+  refreshUIExperiments();
   navigateCurrentURI();
   addEventListener("popstate", function(){navigateCurrentURI()});
-  insertCarbonNav();
 });
 </script>
-<title>User - Tech Stuff</title><link rel="icon" href="/icons/16x16/folder.png"><link rel="canonical" href="https://teknixstuff.com/Computer/Windows (C_)/User/"></head><body><folder id="fsroot">
+<title>User - Tech Stuff</title><link rel="icon" href="/icons/16x16/folder.png"><link rel="canonical" href="https://teknixstuff.com/Computer/Windows (C_)/User/"></head><body class="uiexperiments"><folder id="fsroot">
   <folder name="Favorites" icon="favorites" open="">
+    <folder name="Home" icon="help">
+      <pageclass>uiexperiments-nopadding</pageclass>
+      <dirheader name="Tech Stuff" icon="teknixstuff">Your PC, simplified</dirheader>
+      <rtf docid="flying-windows-header" type="inline"></rtf>
+      <group name="Projects" class="uiexperiments-hide">
+        <shortcut name="Revert8Plus" icon="r8p" target="/Libraries/Projects/Revert8Plus"></shortcut>
+        <shortcut name="Unofficial Service Packs" icon="update" target="/Libraries/Projects/Unofficial Service Packs"></shortcut>
+        <shortcut name="Pale Moon add-ons" icon="palemoon" target="/Libraries/Projects/Pale Moon add-ons"></shortcut>
+        <shortcut name="RDP Configurator" icon="rdp" target="/Libraries/Projects/RDP Configurator"></shortcut>
+      </group>
+      <group name="About Me" class="uiexperiments-hide">
+        <rtf docid="about-me" type="inline"></rtf>
+      </group>
+      <group pref-width="100%" class="uiexperiments-show uiexperiments-page-compact">
+        <group shrink="1" pref-width="400px" min-width="calc(100% - 596px)" grow="1">
+          <group name="Developing tools to simplify and enhance your PC" class="uiexperiments-no-bullet-border uiexperiments-groupheader-large">
+            <rtf docid="info" type="inline"></rtf>
+          </group>
+          <group name="To find the tool you need, select a project" class="uiexperiments-random-border-thing uiexperiments-no-bullet-border uiexperiments-groupheader-large">
+            <shortcut name="Revert8Plus" icon="r8p" target="/Libraries/Projects/Revert8Plus" description="A fully automated and customisable Windows transformation pack"></shortcut>
+            <shortcut name="Unofficial Service Packs" icon="update" target="/Libraries/Projects/Unofficial Service Packs" description="Install Microsoft's official updates for Windows&nbsp;7 or Vista based OSs"></shortcut>
+            <shortcut name="Pale Moon add-ons" icon="palemoon" target="/Libraries/Projects/Pale Moon add-ons" description="SubWebView and Clean Flash Player"></shortcut>
+            <shortcut name="RDP Configurator" icon="rdp" target="/Libraries/Projects/RDP Configurator" description="Enable Remote Desktop on any edition of Windows"></shortcut>
+          </group>
+        </group>
+        <group name="Project news" shrink="1" pref-width="400px" class="uiexperiments-no-bullet-border group-primary">
+          <rtf docid="news" type="inline"></rtf>
+        </group>
+      </group>
+      <group name="Project news" shrink="1" pref-width="400px" class="uiexperiments-hide group-primary">
+        <rtf docid="news" type="inline"></rtf>
+      </group>
+      <group name="Contact" class="uiexperiments-hide">
+        <link name="Youtube" icon="youtube" href="https://youtube.com/@teknixstuff">
+        <link name="Discord" icon="discord" href="https://discord.gg/J7J59GkEUT">
+        <link name="GitHub" icon="github" href="https://github.com/teknixstuff">
+        <link name="Twitter" icon="twitter" href="https://twitter.com/teknixstuff">
+        <link name="Email" icon="mail" href="mailto:hello@teknixstuff.com">
+        <shortcut name="Buy Me a Coffee" icon="buymeacoffee" target="/Network/Donate"></shortcut>
+      </group>
+      <group pref-width="100%" shrink="1" grow="1">
+        <rtf docid="home-footer" type="inline"></rtf>
+      </group>
+    </folder>
     <folder name="Desktop" icon="desktop">
+      <folder name="About" icon="desktop">
+        <dirheader name="About this site" icon="desktop">A journey of discovery and development</dirheader>
+        <group class="uiexperiments-page-compact" pref-width="100%" grow="1" shrink="1">
+          <rtf docid="site-info" type="inline"></rtf>
+        </group>
+      </folder>
     </folder>
     <folder name="Downloads" icon="downloads">
-      <link name="subwebview-1.0.5.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5.xpi">
-      <link name="subwebview-1.0.5-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/main.zip">
-      <link name="subwebview-1.0.5-cef109.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5-cef109.xpi">
-      <link name="subwebview-1.0.5-cef109-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/w7-cef-109.zip">
-      <link name="NVCleanstall_W8_NVIDIA_474.89_x64_Desktop_Setup.exe" icon="nvidia" href="https://github.com/teknixstuff/misc-files/releases/download/rtx30drivers/NVCleanstall_W8_NVIDIA_474.89_x64_Desktop_Setup.exe">
-      <link name="NVCleanstall_W8_NVIDIA_474.89_x64_Notebook_Setup.exe" icon="nvidia" href="https://github.com/teknixstuff/misc-files/releases/download/rtx30drivers/NVCleanstall_W8_NVIDIA_474.89_x64_Notebook_Setup.exe">
-      <link name="cleanflashplayer-34.0.0.323.xpi" icon="xpi" href="https://github.com/teknixstuff/misc-files/releases/download/CleanFlashPlayer-34.0.0.323/cleanflashplayer@teknixstuff.com-34.0.0.323.xpi">
-      <link name="r8p-4.0.9.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/1137/r8p.exe">
-      <link name="r8p-4.0.1138.exe" icon="r8p" href="https://github.com/teknixstuff/revert8plus/releases/download/1138/r8p.exe">
-      <link name="r8p-4.0.7.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.7/r8p.exe">
-      <link name="r8p-4.0.1135.exe" icon="r8p" href="https://github.com/teknixstuff/revert8plus/releases/download/1135/r8p.exe">
-      <link name="Boot8Plus.v1.5.2.zip" icon="zip" href="https://github.com/teknixstuff/misc-files/releases/download/Boot8Plus-v1.5.2/Boot8Plus.v1.5.2.zip">
-      <link name="VistaUSP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/VistaUSP3.0/VistaUSP3.exe">
-      <link name="7USP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/W7USP3/7USP3.exe">
-      <link name="r8p-4.0.6.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.6/r8p.exe">
-      <link name="r8p-4.0.5.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.5/r8p.exe">
-      <link name="W10Downgrade.iso (mirror 1)" icon="iso" href="https://dl.dropbox.com/scl/fi/v8o51f56lwq254k62m1fd/W10Downgrade.iso?rlkey=jlly2r5jxhbllo98oe2ry555p&amp;st=ek6z6at9&amp;dl=0">
-      <link name="W10Downgrade.iso (mirror 2)" icon="iso" href="https://dl.dropbox.com/scl/fi/k39ujz72cgezdgiosn6np/W10Downgrade.iso?rlkey=tvc7gl8h9o4q87qb58l53qa0f&amp;st=jv38t1ua&amp;dl=0">
-      <link name="W10Downgrade.iso (mirror 3)" icon="iso" href="https://dl.dropbox.com/scl/fi/nzi5ppjp9ngqjgtepoclm/W10Downgrade.iso?rlkey=f1m1e8jq5wpwh0pkw1mhjkfca&amp;st=7za9yd6p&amp;dl=0">
-      <link name="W10Downgrade.iso (mirror 4)" icon="iso" href="https://dl.dropbox.com/scl/fi/u4rcnufmkgcpe2yz9fftf/W10Downgrade.iso?rlkey=m5knxtlsmy0vlvr9rm1jf8t6j&amp;st=3mf5o59b&amp;dl=0">
-      <link name="W10Downgrade.iso (mirror 5)" icon="iso" href="https://dl.dropbox.com/scl/fi/oroalcj7kkufqsdanxisr/W10Downgrade.iso?rlkey=c1cnhsq47knu2qcfxua1o5ihb&amp;st=l4r9h7s7&amp;dl=0">
-      <link name="pmprofile.7z" icon="7z" href="https://github.com/teknixstuff/misc-files/releases/download/pmprofile/pmprofile.7z">
-      <!--<link name="Office.2010.Ultimate.exe" icon="office2010" href="https://github.com/teknixstuff/misc-files/releases/download/office2010/Office.2010.Ultimate.exe"></link>-->
-      <link name="Classic2010.user.js" icon="js" href="https://github.com/teknixstuff/misc-files/releases/download/classic2010/classic2010.user.js">
-      <link name="22H2forLTSC.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/22h2forltsc/22H2forLTSC.EXE">
-      <link name="Windows.XP.Pro.SP3.x86.ova" icon="ova" href="https://github.com/teknixstuff/misc-files/releases/download/winxp-sp3-pro/Windows.XP.Pro.SP3.x86.ova">
-      <link name="Windows.98.ova" icon="ova" href="https://github.com/teknixstuff/misc-files/releases/download/windows98/Windows.98.ova">
-    </folder>
-    <folder name="Home" icon="help">
-      <dirheader name="Tech Stuff" icon="teknixstuff">Your PC, simplified.</dirheader>
-      <groupheader name="Gallery"></groupheader>
-      <rtf docid="info-gallery" type="inline"></rtf>
-      <groupheader name="Info"></groupheader>
-      <rtf docid="info" type="inline"></rtf>
-      <groupheader name="Contact"></groupheader>
-      <link name="Youtube" icon="youtube" href="https://youtube.com/@teknixstuff">
-      <link name="Discord" icon="discord" href="https://discord.gg/J7J59GkEUT">
-      <link name="GitHub" icon="github" href="https://github.com/teknixstuff">
-      <link name="Twitter" icon="twitter" href="https://twitter.com/teknixstuff">
-      <link name="Email" icon="mail" href="mailto:hello@teknixstuff.com">
-      <groupheader name="Other"></groupheader>
-      <folder name="System" icon="systemcpl" navpin="false">
-        <rtf docid="systemcpl" type="inline"></rtf>
-      </folder>
-      <groupheader name="Privacy Policy"></groupheader>
-      <rtf docid="privacy" type="inline"></rtf>
+      <group>
+        <link name="subwebview-1.0.5.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5.xpi">
+        <link name="subwebview-1.0.5-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/main.zip">
+        <link name="subwebview-1.0.5-cef109.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5-cef109.xpi">
+        <link name="subwebview-1.0.5-cef109-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/w7-cef-109.zip">
+        <link name="NVCleanstall_W8_NVIDIA_474.89_x64_Desktop_Setup.exe" icon="nvidia" href="https://github.com/teknixstuff/misc-files/releases/download/rtx30drivers/NVCleanstall_W8_NVIDIA_474.89_x64_Desktop_Setup.exe">
+        <link name="NVCleanstall_W8_NVIDIA_474.89_x64_Notebook_Setup.exe" icon="nvidia" href="https://github.com/teknixstuff/misc-files/releases/download/rtx30drivers/NVCleanstall_W8_NVIDIA_474.89_x64_Notebook_Setup.exe">
+        <link name="cleanflashplayer-34.0.0.323.xpi" icon="xpi" href="https://github.com/teknixstuff/misc-files/releases/download/CleanFlashPlayer-34.0.0.323/cleanflashplayer@teknixstuff.com-34.0.0.323.xpi">
+        <link name="r8p-4.0.9.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/1137/r8p.exe">
+        <link name="r8p-4.0.1138.exe" icon="r8p" href="https://github.com/teknixstuff/revert8plus/releases/download/1138/r8p.exe">
+        <link name="r8p-4.0.7.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.7/r8p.exe">
+        <link name="r8p-4.0.1135.exe" icon="r8p" href="https://github.com/teknixstuff/revert8plus/releases/download/1135/r8p.exe">
+        <link name="Boot8Plus.v1.5.2.zip" icon="zip" href="https://github.com/teknixstuff/misc-files/releases/download/Boot8Plus-v1.5.2/Boot8Plus.v1.5.2.zip">
+        <link name="VistaUSP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/VistaUSP3.0/VistaUSP3.exe">
+        <link name="7USP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/W7USP3/7USP3.exe">
+        <link name="r8p-4.0.6.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.6/r8p.exe">
+        <link name="r8p-4.0.5.exe" icon="r8p" href="http://github.com/teknixstuff/revert8plus/releases/download/4.0.5/r8p.exe">
+        <link name="W10Downgrade.iso (mirror 1)" icon="iso" href="https://dl.dropbox.com/scl/fi/v8o51f56lwq254k62m1fd/W10Downgrade.iso?rlkey=jlly2r5jxhbllo98oe2ry555p&amp;st=ek6z6at9&amp;dl=0">
+        <link name="W10Downgrade.iso (mirror 2)" icon="iso" href="https://dl.dropbox.com/scl/fi/k39ujz72cgezdgiosn6np/W10Downgrade.iso?rlkey=tvc7gl8h9o4q87qb58l53qa0f&amp;st=jv38t1ua&amp;dl=0">
+        <link name="W10Downgrade.iso (mirror 3)" icon="iso" href="https://dl.dropbox.com/scl/fi/nzi5ppjp9ngqjgtepoclm/W10Downgrade.iso?rlkey=f1m1e8jq5wpwh0pkw1mhjkfca&amp;st=7za9yd6p&amp;dl=0">
+        <link name="W10Downgrade.iso (mirror 4)" icon="iso" href="https://dl.dropbox.com/scl/fi/u4rcnufmkgcpe2yz9fftf/W10Downgrade.iso?rlkey=m5knxtlsmy0vlvr9rm1jf8t6j&amp;st=3mf5o59b&amp;dl=0">
+        <link name="W10Downgrade.iso (mirror 5)" icon="iso" href="https://dl.dropbox.com/scl/fi/oroalcj7kkufqsdanxisr/W10Downgrade.iso?rlkey=c1cnhsq47knu2qcfxua1o5ihb&amp;st=l4r9h7s7&amp;dl=0">
+        <link name="pmprofile.7z" icon="7z" href="https://github.com/teknixstuff/misc-files/releases/download/pmprofile/pmprofile.7z">
+        <link name="Office.2010.Ultimate.exe" icon="office2010" href="https://github.com/teknixstuff/misc-files/releases/download/office2010/Office.2010.Ultimate.exe">
+        <link name="Classic2010.user.js" icon="js" href="https://github.com/teknixstuff/misc-files/releases/download/classic2010/classic2010.user.js">
+        <link name="22H2forLTSC.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/22h2forltsc/22H2forLTSC.EXE">
+        <link name="Windows.XP.Pro.SP3.x86.ova" icon="ova" href="https://github.com/teknixstuff/misc-files/releases/download/winxp-sp3-pro/Windows.XP.Pro.SP3.x86.ova">
+        <link name="Windows.98.ova" icon="ova" href="https://github.com/teknixstuff/misc-files/releases/download/windows98/Windows.98.ova">
+      </group>
     </folder>
   </folder>
   <folder name="Libraries" icon="libraries" open="">
     <folder name="Projects" icon="documents" open="">
       <folder name="Revert8Plus" icon="r8p">
-        <dirheader name="Revert8Plus" icon="r8p">Windows 7 and Vista transformation pack for Windows 10 and 11</dirheader>
-        <!--<rtf docid="r8p-as-seen-on-betanews" type="inline"></rtf>-->
-        <groupheader name="Frequently asked questions"></groupheader>
-        <rtf docid="r8p-faq" type="inline"></rtf>
-        <groupheader name="Downloads"></groupheader>
-        <link name="4.0.9 (stable)" icon="dlgreen" notify="r8p-download-release" href="http://github.com/teknixstuff/revert8plus/releases/download/1137/r8p.exe">
-        <link name="4.0.1138 (beta)" icon="dlblue" notify="r8p-download-beta" href="https://github.com/teknixstuff/revert8plus/releases/download/1138/r8p.exe">
-        <link name="Previous versions" icon="dlorange" href="https://github.com/teknixstuff/revert8plus/releases/">
+        <dirheader name="Revert8Plus" icon="r8p">Windows&nbsp;7 and Vista transformation pack for Windows 10 and 11</dirheader>
+        <group name="What is Revert8Plus?" shrink="1" pref-width="400px" min-width="calc(50% - 64px)" class="group-primary">
+          <rtf docid="r8p-info" type="inline"></rtf>
+        </group>
+        <group name="Frequently asked questions" shrink="1" pref-width="400px" min-width="calc(50% - 64px)" class="group-primary">
+          <rtf docid="r8p-faq" type="inline"></rtf>
+        </group>
+        <group name="History" shrink="1" pref-width="400px" min-width="calc(50% - 64px)">
+          <rtf docid="r8p-history" type="inline"></rtf>
+        </group>
+        <group shrink="1" pref-width="400px" min-width="calc(50% - 64px)">
+          <group name="Reviews" pref-width="100%">
+            <link name="BetaNews" icon="betanews" href="https://betanews.com/2025/01/31/transform-windows-10-or-11-into-windows-7-in-just-five-clicks/">
+          </group>
+          <group name="Downloads" pref-width="100%">
+            <link name="4.0.9 (stable)" icon="dlgreen" notify="r8p-download-release" href="http://github.com/teknixstuff/revert8plus/releases/download/1137/r8p.exe">
+            <link name="4.0.1138 (beta)" icon="dlblue" notify="r8p-download-beta" href="https://github.com/teknixstuff/revert8plus/releases/download/1138/r8p.exe">
+            <link name="Previous versions" icon="dlorange" href="https://github.com/teknixstuff/revert8plus/releases/">
+          </group>
+        </group>
       </folder>
-      <folder name="Unofficial Service Packs" icon="update">
-        <dirheader name="Under construction" icon="info">This page is not yet complete. Please check back later.</dirheader>
-        <groupheader name="Windows 7 SP3"></groupheader>
-        <link name="7USP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/W7USP3/7USP3.exe">
+      <folder name="W11 -> W10 upgrade tool" icon="w10" navpin="false">
+        <dirheader name="Coming soon!" icon="info" force-legacy="1">This project is not yet available. Please check back later.</dirheader>
+      </folder>
+      <folder name="ChatDot" icon="chatdot" navpin="false">
+        <dirheader name="Under development" icon="info" force-legacy="1">This project is still under development. Please check back later.</dirheader>
       </folder>
       <folder name="Pale Moon add-ons" icon="palemoon">
-        <groupheader name="SubWebView"></groupheader>
-        <rtf docid="subwebview" type="inline"></rtf>
-        <link name="subwebview-1.0.5.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5.xpi">
-        <link name="subwebview-1.0.5-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/main.zip">
-        <link name="subwebview-1.0.5-cef109.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5-cef109.xpi">
-        <link name="subwebview-1.0.5-cef109-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/w7-cef-109.zip">
-        <groupheader name="Clean Flash Player"></groupheader>
-        <rtf docid="cleanflashplayer" type="inline"></rtf>
-        <link name="cleanflashplayer-34.0.0.323.xpi" icon="xpi" href="https://github.com/teknixstuff/misc-files/releases/download/CleanFlashPlayer-34.0.0.323/cleanflashplayer@teknixstuff.com-34.0.0.323.xpi">
+        <dirheader name="Pale Moon add-ons" icon="palemoon">SubWebView and Clean Flash Player</dirheader>
+        <group name="SubWebView" grow="1" shrink="1" pref-width="100%">
+          <rtf docid="subwebview" type="inline"></rtf>
+          <link name="subwebview-1.0.5.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5.xpi">
+          <link name="subwebview-1.0.5-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/main.zip">
+          <link name="subwebview-1.0.5-cef109.xpi" icon="xpi" href="https://github.com/teknixstuff/subwebview/releases/download/1.0.5/subwebview-1.0.5-cef109.xpi">
+          <link name="subwebview-1.0.5-cef109-src.zip" icon="zip" href="https://github.com/teknixstuff/subwebview/archive/refs/heads/w7-cef-109.zip">
+        </group>
+        <group name="Clean Flash Player" grow="1" shrink="1" pref-width="100%">
+          <rtf docid="cleanflashplayer" type="inline"></rtf>
+          <link name="cleanflashplayer-34.0.0.323.xpi" icon="xpi" href="https://github.com/teknixstuff/misc-files/releases/download/CleanFlashPlayer-34.0.0.323/cleanflashplayer@teknixstuff.com-34.0.0.323.xpi">
+        </group>
+      </folder>
+      <folder name="Unofficial Service Packs" icon="update">
+        <pageclass>uiexperiments-page-compact</pageclass>
+        <dirheader name="Unofficial Service Packs" icon="update">Install official updates on Windows&nbsp;7 or Vista based OSs after EOL</dirheader>
+        <group name="Windows&nbsp;7 SP3" shrink="1" pref-width="400px" min-width="calc(50% - 70px)" class="group-primary">
+          <rtf docid="w7usp3" type="inline"></rtf>
+          <link name="7USP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/W7USP3/7USP3.exe">
+        </group>
+        <group name="Windows Vista SP3" shrink="1" pref-width="400px" min-width="calc(50% - 70px)" class="group-primary">
+          <rtf docid="vistausp3" type="inline"></rtf>
+          <link name="VistaUSP3.exe" icon="packagesetup" href="https://github.com/teknixstuff/misc-files/releases/download/VistaUSP3.0/VistaSP3.exe">
+        </group>
       </folder>
       <folder name="RDP Configurator" icon="rdp">
-        <dirheader name="RDP Configurator" icon="rdp">Enable Remote Desktop on any editon of Windows, with support for tunnels and concurrent sessions.</dirheader>
-        <rtf docid="rdpconfig" type="inline"></rtf>
-        <groupheader name="Downloads"></groupheader>
-        <link name="RDPWrapX-v2.0.18.exe" icon="rdp" href="https://github.com/teknixstuff/misc-files/releases/download/rdp-configurator/RDPWrapX-v2.0.18.exe">
+        <dirheader name="RDP Configurator" icon="rdp" class="uiexperiments-hide">Enable Remote Desktop on any edition of Windows, with support for tunnels and concurrent sessions.</dirheader>
+        <dirheader name="RDP Configurator" icon="rdp" class="uiexperiments-show">Enable Remote Desktop on any edition of Windows</dirheader>
+        <group name="Screenshot" shrink="1" pref-width="420px">
+          <rtf docid="rdpconfig" type="inline"></rtf>
+        </group>
+        <group name="Info" shrink="1" pref-width="calc(100% - 1070px)" class="group-primary">
+          <rtf docid="rdpconfig-info" type="inline"></rtf>
+          <video name="Easily set up remote desktop on any edition of windows" ytid="fzQ1ev7yNUA" icon="video"></video>
+          <link name="RDPWrapX-v2.0.18.exe" icon="rdp" href="https://github.com/teknixstuff/misc-files/releases/download/rdp-configurator/RDPWrapX-v2.0.18.exe">
+        </group>
       </folder>
     </folder>
     <folder name="Music" icon="music">
-      <dirheader name="Under construction" icon="info">This page is not yet complete. Please check back later.</dirheader>
+      <dirheader name="Under construction" icon="info" force-legacy="1">This page is not yet complete. Please check back later.</dirheader>
     </folder>
     <folder name="Pictures" icon="pictures">
-      <dirheader name="Under construction" icon="info">This page is not yet complete. Please check back later.</dirheader>
+      <dirheader name="Under construction" icon="info" force-legacy="1">This page is not yet complete. Please check back later.</dirheader>
     </folder>
     <folder name="Videos" icon="videos" open="">
-      <video name="Revert8Plus v4: Transform Windows 10 or 11 into Windows 7, in only 5 clicks!" ytid="FjXGn-VFwEo" icon="video" navpin="true"></video>
+      <video name="Windows Vista Unofficial Service Pack 3" ytid="ppOe7XLe9Ks" icon="video"></video>
+      <video name="Revert8Plus v4: Transform Windows 10 or 11 into Windows&nbsp;7, in only 5 clicks!" ytid="FjXGn-VFwEo" icon="video" navpin="true"></video>
       <video name="Classic2010: restoring old website UIs" ytid="g3ZV1YbhT5A" icon="video" navpin="true"></video>
-      <video name="Windows 7 Unofficial Service Pack 3" ytid="mjsKEM9hFN8" icon="video" navpin="true"></video>
+      <video name="Windows&nbsp;7 Unofficial Service Pack 3" ytid="mjsKEM9hFN8" icon="video" navpin="true"></video>
       <video name="Running Minecraft on Windows XP" ytid="YCXhOi2qhgg" icon="video"></video>
       <video name="Run Modern Flash on Modern Chrome!" ytid="1JQ12PqhDS0" icon="video"></video>
       <video name="Easily set up remote desktop on any edition of windows" ytid="fzQ1ev7yNUA" icon="video"></video>
-      <video name="Transform Windows 8/10/11 into Windows 7, in only 4 clicks!" ytid="C9GY1DWNL20" icon="video"></video>
-      <video name="Revert8Plus v3.2: Transform Windows 8/10/11 into Windows 7 or Vista" ytid="TClgCsi5SmA" icon="video"></video>
-      <video name="Revert8Plus v3.1: Transforming Windows 8/10/11 into Windows 7" ytid="_ZwosI5GQMI" icon="video"></video>
-      <video name="Transforming Windows 8, 10 or 11 into Windows 7 and beyond!" ytid="Bo_1DxkdtGk" icon="video"></video>
+      <video name="Transform Windows 8/10/11 into Windows&nbsp;7, in only 4 clicks!" ytid="C9GY1DWNL20" icon="video"></video>
+      <video name="Revert8Plus v3.2: Transform Windows 8/10/11 into Windows&nbsp;7 or Vista" ytid="TClgCsi5SmA" icon="video"></video>
+      <video name="Revert8Plus v3.1: Transforming Windows 8/10/11 into Windows&nbsp;7" ytid="_ZwosI5GQMI" icon="video"></video>
+      <video name="Transforming Windows 8, 10 or 11 into Windows&nbsp;7 and beyond!" ytid="Bo_1DxkdtGk" icon="video"></video>
       <video name="Upgrading Windows NT, the quick way!" ytid="gFg4iOwM5WE" icon="video"></video>
       <video name="Windows XP mode for Windows 10 or 11" ytid="GAQMxD4QBf8" icon="video"></video>
-      <video name="Revert8Plus v2: Transform Windows 8/10/11 into Windows 7" ytid="DkABmMUrfco" icon="video"></video>
-      <video name="Revert8Plus: Transform Windows 8/10/11 into Windows 7 or Vista" ytid="ldgMzTQAEc0" icon="video"></video>
+      <video name="Revert8Plus v2: Transform Windows 8/10/11 into Windows&nbsp;7" ytid="DkABmMUrfco" icon="video"></video>
+      <video name="Revert8Plus: Transform Windows 8/10/11 into Windows&nbsp;7 or Vista" ytid="ldgMzTQAEc0" icon="video"></video>
       <video name="Reinstall Windows 10 without losing apps or data, in 2 clicks!" ytid="3xesTExn6bU" icon="video"></video>
       <video name="Upgrade to Windows 11 on unsupported devices in 2 clicks!" ytid="ndWqpN9gnWk" icon="video"></video>
       <video name="Comparing Android ROMs" ytid="ZjaicacP1Jk" icon="video"></video>
@@ -1383,8 +1640,24 @@ document.addEventListener("DOMContentLoaded", function(){
     <folder name="Data (E:)" icon="fixeddrive">
     </folder>
   </folder>
-  <folder name="Network" icon="network">
-    <dirheader name="Under construction" icon="info">This page is not yet complete. Please check back later.</dirheader>
+  <folder name="Network" icon="network" open="">
+    <dirheader name="Under construction" icon="info" force-legacy="1">This page is not yet complete. Please check back later.</dirheader>
+    <folder name="Donate" icon="buymeacoffee">
+      <rtf docid="buymeacoffee" type="inline"></rtf>
+    </folder>
+  </folder>
+  <shortcut name="About" icon="desktop" target="/Favorites/Desktop/About" navpin="true"></shortcut>
+  <folder name="Contact" icon="network" open="">
+    <link name="Youtube" icon="youtube" href="https://youtube.com/@teknixstuff" navpin="true">
+    <link name="Discord" icon="discord" href="https://discord.gg/J7J59GkEUT" navpin="true">
+    <link name="GitHub" icon="github" href="https://github.com/teknixstuff" navpin="true">
+    <link name="Twitter" icon="twitter" href="https://twitter.com/teknixstuff" navpin="true">
+    <link name="Email" icon="mail" href="mailto:hello@teknixstuff.com" navpin="true">
+  </folder>
+  <shortcut name="Donate" icon="buymeacoffee" target="/Network/Donate" navpin="true"></shortcut>
+  <folder name="Privacy Policy" icon="js" navpin="false">
+    <pageclass>uiexperiments-page-compact</pageclass>
+    <rtf docid="privacy-policy" type="inline"></rtf>
   </folder>
 </folder>
 <template id="rtf-subwebview">
@@ -1410,6 +1683,28 @@ document.addEventListener("DOMContentLoaded", function(){
 </template>
 <template id="rtf-info">
   <style>
+    .uiexperiments #rtf-info-container {
+      font-size: 13pt;
+      max-width: none;
+    }
+    #rtf-info-container {
+      font-size: 10.5pt;
+      max-width: 600px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 8px;
+    }
+  </style>
+  <div id="rtf-info-container" class="selectable">
+    <p>Improve the performance and user interface of your PC, with these software solutions. Tech&nbsp;Stuff develops a range of tools to help transform your current system, enabling more customisation and control over the set up of your PC. From installing updates on older systems and upgrading your OS, to restoring popular features and functions which have officially disappeared, you can configure your system to match your individual requirements.</p>
+  </div>
+</template>
+<template id="rtf-about-me">
+  <style>
+    .uiexperiments #rtf-info-container {
+      font-size: 13pt;
+      max-width: none;
+    }
     #rtf-info-container {
       font-size: 10.5pt;
       max-width: 600px;
@@ -1425,6 +1720,19 @@ document.addEventListener("DOMContentLoaded", function(){
     Whilst the projects on this site cover all eras, there is greater focus on older systems, which I feel are generally more enjoyable to use, with their simple looking and better functioning designs.<br>
     <br>
     Take a look at the left panel to navigate your way around this site!
+  </div>
+</template>
+<template id="rtf-r8p-info">
+  <div style="padding-left: 24px; margin-right: 16px;">
+    <p>
+      Revert8Plus is a fully automated and customisable transformation pack for users of Windows 10 or 11. It enables you to transform the look of your PC into Windows&nbsp;7, in just five clicks of your mouse. It was first released in February 2024, with the current version, v4, having been released in January 2025.
+    </p>
+    <p>
+      The transformation pack restores many of the features you might now miss, including aero glass, start menu, control panel, and Windows Media Center. It works with all versions of Windows 10 and 11, up to 24H2. As most features do not require system file modifications, Windows updates can still be installed without issue. If you install it and for any reason change your mind, the transformation pack can be quickly and simply uninstalled from control panel.
+    </p>
+    <p>
+      The main features that Revert8Plus v4 restores to their W7 versions are as follows: Start Menu, taskbar, File Explorer, standard controls, aero glass, tray menus, alt-tab, basic and classic theme, Control panel, UWP titlebars, login screen, context menus, file copy dialog, message boxes, aero peek, and UAC.
+    </p>
   </div>
 </template>
 <template id="rtf-r8p-faq">
@@ -1462,56 +1770,16 @@ document.addEventListener("DOMContentLoaded", function(){
     <li>Does this impact performance?</li>
     <li>On Windows 10, it usually has very little impact, whilst on Windows 11, it generally improves performance.</li>
     <li>What versions of Windows does this support?</li>
-    <li>Windows 10 versions 1607, 1703, 1709, 1803, 1809, 1903, 1909, 20H1, 20H2, 21H1, 21H2, and 22H2.<br>Windows 11 versions 21H2, 22H2, 23H2, and 24H2.</li>
+    <li>Windows 10 versions 1607, 1703, 1709, 1803, 1809, 1903, 1909, 20H1, 20H2, 21H1, 21H2, and 22H2.<br>Windows 11 versions 21H2, 22H2, <s>23H2, and 24H2</s>.<br><b>Update: Microsoft has broken Revert8Plus on Windows 11 23H2 and 24H2 in a Windows Update.</b></li>
     <li>How can I uninstall Revert8Plus?
     </li><li>Go to Control Panel &gt; Programs and features &gt; Uninstall a program</li>
     <li>Can I use Windows Update with Revert8Plus?</li>
     <li>Yes! You can safely update Windows without breaking Revert8Plus. You don't need to uninstall it beforehand.</li>
-    <li>How can I give a donation for this project?</li>
-    <li>Use the <yt-btn><yt-btnicon>$</yt-btnicon>Thanks</yt-btn> button on any of the videos on <a href="https://www.youtube.com/@teknixstuff">my youtube channel</a></li>
+    <li>How can I support this project?</li>
+    <li>Use <a href="/Network/Donate/">Buy Me a Coffee</a>, or use the <yt-btn><yt-btnicon>$</yt-btnicon>Thanks</yt-btn> button on any video on <a href="https://www.youtube.com/@teknixstuff">my youtube channel</a></li>
     <li>I've got a question not listed here!</li>
     <li>No worries, <a href="/Favorites/Home/">contact me</a>!</li>
   </ul>
-</template>
-<template id="rtf-info-gallery">
-  <style>
-    #rtf-info-gallery-container {
-      overflow-x: auto;
-      display: flex;
-      flex-flow: row nowrap;
-    }
-    #rtf-info-gallery-container > span {
-      position: relative;
-      margin: 0 8px;
-    }
-    #rtf-info-gallery-container > span > img {
-      width: 256px;
-      min-width: 256px;
-    }
-    #rtf-info-gallery-container > span > a {
-      position: absolute;
-      left: 0;
-      bottom: 4px;
-      width: 32px;
-      height: 32px;
-    }
-    #rtf-info-gallery-container > span > a[href="/Libraries/Projects/Revert8Plus/"] {
-      background: url('/icons/full/r8p.ico') center center / 100% auto no-repeat
-    }
-  </style>
-  <div id="rtf-info-gallery-container">
-    <span><img src="/icons/screenshots/r8p-0-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-1-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-2-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-3-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-4-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-5-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-6-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-7-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-8-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-9-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-    <span><img src="/icons/screenshots/r8p-10-thumb.jpg"><a href="/Libraries/Projects/Revert8Plus/"></a></span>
-  </div>
 </template>
 <template id="rtf-large-icons">
   <style>
@@ -1523,135 +1791,139 @@ document.addEventListener("DOMContentLoaded", function(){
 <template id="rtf-rdpconfig">
   <img src="/icons/screenshots/rdp.png" style="margin-left: 8px;">
 </template>
-<template id="rtf-systemcpl">
+<template id="rtf-buymeacoffee">
+  <iframe src="https://buymeacoffee.com/widget/page/teknixstuff" style="width: 100%; height: 100%; border: none;"></iframe>
+  <style>#contents-pane {padding: 0 !important}</style>
+</template>
+<template id="rtf-news">
+  <style>
+    #rtf-news-list > li {
+      padding-bottom: 12px;
+    }
+  </style>
+  <ul id="rtf-news-list">
+    <li>ChatDot's desktop client can now process logins successfully.</li>
+    <li>Got the login dialog for ChatDot's desktop client working.</li>
+    <li>Building a Windows desktop client for ChatDot.</li>
+    <li>Messages now wrap correctly on ChatDot.</li>
+    <li>Added Flying Windows to the site homepage.</li>
+    <li>Trying to figure out why symbol hooks end up causing a stack overflow.</li>
+    <li>Symbol downloading now mostly works in r8pv5. Turns out it was crashing because the input strings aren't null terminated.</li>
+    <li>Fixed path case sensitivity in r8pv5. This is rather an edge-case bug, but for some reason my development VM has System32 capitalised incorrectly, making it very obvious.</li>
+    <li>Making more progress on r8pv5 now that I've finally figured out how to get a debugger to work with it.</li>
+  </ul>
+</template>
+<template id="rtf-flying-windows-header">
+  <script src="/flyingwindows.js"></script>
+  <script>
+    (function(){
+      let lastCanvasWidth = 0;
+      let lastCanvasHeight = 0;
+      let init = function(){
+        let dirhead = document.querySelector('.dirheader-container');
+        if (dirhead.querySelector('.flying-windows')) {
+          return;
+        }
+        let canvas = document.createElement('canvas');
+        canvas.classList.add("flying-windows");
+        let handleResize = function(){
+          let headBounds = dirhead.getBoundingClientRect();
+          if (lastCanvasWidth != headBounds.width) {
+            canvas.width = lastCanvasWidth = headBounds.width;
+          }
+          if (lastCanvasHeight != headBounds.height) {
+            canvas.height = lastCanvasHeight = headBounds.height;
+          }
+        };
+        window.addEventListener('resize', handleResize);
+        setInterval(handleResize, 0);
+        handleResize();
+        dirhead.appendChild(canvas);
+        drawFlyingWindows(canvas);
+      };
+      if (typeof window.nodePrerender !== "undefined") {
+        // this is node
+      } else if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
+        setTimeout(init, 0);
+      } else {
+        document.addEventListener("DOMContentLoaded", init);
+      }
+    })();
+  </script>
+</template>
+<template id="rtf-w7usp3">
   <div style="width: 100%; padding-left: 24px;">
-    <h1>View basic information about my computer</h1>
-    <div class="cplgroupheader-container">
-      <div class="cplgroupheader-text">Windows edition</div>
-      <div class="cplgroupheader-border"></div>
-    </div>
-    <img src="/proporb.png" style="float: right;">
-    <table style="padding-left: 24px; padding-bottom: 8px;">
-      <colgroup>
-        <col span="1">
-      </colgroup>
-      <tbody>
-        <tr><td>Windows 10 IoT Enterprise LTSC</td></tr>
-        <tr><td>© Microsoft Corporation. All rights reserved.</td></tr>
-      </tbody>
-    </table>
-    <div class="cplgroupheader-container">
-      <div class="cplgroupheader-text">System</div>
-      <div class="cplgroupheader-border"></div>
-    </div>
-    <table style="width: 100%; padding-left: 24px; padding-bottom: 8px;">
-      <colgroup>
-        <col span="1" style="width: 24ch;">
-        <col span="1">
-        <col span="1">
-      </colgroup>
-      <tbody>
-        <tr>
-          <td>Rating:</td>
-          <td>
-            <span style="
-              display: inline-block; 
-              background: linear-gradient(200deg, rgba(27,68,122,1) 30%, rgba(112,184,214,1) 100%);
-              width: 32px;
-              height: 24px;
-            ">
-              <span style="
-                display: inline-block; 
-                width: 32px;
-                height: 24px;
-                color: white; 
-                font-weight: bold;
-                line-height: 24px;
-                text-align: center;
-                filter: drop-shadow(1px 1px 0.5px #000000);
-              ">
-                9.4
-              </span> 
-            </span> 
-            Windows Experience Index
-          </td>
-        </tr>
-        <tr><td>Processor:</td><td><a class="cpl-link" href="https://app.redirectv.com/t/cw3041Zz">AMD Ryzen 9 5900X 12-Core Processor</a></td></tr>
-        <tr><td>Installed memory (RAM):</td><td><a class="cpl-link" href="https://app.redirectv.com/t/Gy3042OX">32.0 GB DDR4</a></td></tr>
-        <tr><td>Motherboard:</td><td><a class="cpl-link" href="https://app.redirectv.com/t/U53043i8">Gigabyte A520I AC</a></td></tr>
-        <tr><td>Storage:</td><td><a class="cpl-link" href="https://app.redirectv.com/t/Fo3044Cb">Samsung 980 Pro 2TB</a></td></tr>
-        <tr><td>Power supply:</td><td><a class="cpl-link" href="https://app.redirectv.com/t/1X3045AA">CORSAIR RM650</a></td></tr>
-        <tr><td>Graphics:</td><td><a class="cpl-link" href="https://app.redirectv.com/t/cW3046Sf">MSI GeForce RTX 3060 12GB</a></td></tr>
-        <tr><td>System type:</td><td>64-bit Operating System</td></tr>
-        <tr><td>Pen and Touch:</td><td>No Pen or Touch Input is available for this Display</td></tr>
-      </tbody>
-    </table>
-    <div class="cplgroupheader-container">
-      <div class="cplgroupheader-text">Peripherals</div>
-      <div class="cplgroupheader-border"></div>
-    </div>
-    <table style="width: 100%; padding-left: 24px; padding-bottom: 8px;">
-      <colgroup>
-        <col span="1" style="width: 24ch;">
-        <col span="1">
-        <col span="1">
-      </colgroup>
-      <tbody>
-        <tr><td>Keyboard:</td><td><a class="cpl-link" href="https://amzn.to/4hSCsZE">Logitech K400 Plus</a></td></tr>
-      </tbody>
-    </table>
-    <div class="cplgroupheader-container">
-      <div class="cplgroupheader-text">Computer name, domain and workgroup settings</div>
-      <div class="cplgroupheader-border"></div>
-    </div>
-    <table style="width: 100%; padding-left: 24px; padding-bottom: 8px;">
-      <colgroup>
-        <col span="1" style="width: 24ch;">
-        <col span="1">
-        <col span="1">
-      </colgroup>
-      <tbody>
-        <tr><td>Computer name:</td><td>DESKTOP-FJH7L6R</td></tr>
-        <tr><td>Full computer name:</td><td>DESKTOP-FJH7L6R</td></tr>
-        <tr><td>Computer description:</td><td></td></tr>
-        <tr><td>Workgroup:</td><td>WORKGROUP</td></tr>
-      </tbody>
-    </table>
-    <div class="cplgroupheader-container">
-      <div class="cplgroupheader-text">Windows activation</div>
-      <div class="cplgroupheader-border"></div>
-    </div>
-    <div style="float: right;">
-      <img src="/genuine.png"><br>
-      <a href="http://go.microsoft.com/fwlink/?linkid=50944" class="cpl-link">Learn more online...</a>
-    </div>
-    <table style="padding-left: 24px; padding-bottom: 8px;">
-      <colgroup>
-        <col span="1">
-      </colgroup>
-      <tbody>
-        <tr><td>Windows is activated</td></tr>
-        <tr><td>Product ID: 00436-50000-00000-AAOEM</td></tr>
-      </tbody>
-    </table>
-    <div style="font-size: 0.85em; color: #666666;">As an Amazon Associate I earn from qualifying purchases</div>
+    <p>This Windows&nbsp;7 unofficial Service Pack 3 is for those who are still using Windows&nbsp;7 and want Microsoft's official security updates for Windows&nbsp;7 based operating systems. Installing this SP3 enables these security updates to be installed on Windows&nbsp;7, providing continued support until 2026.</p>
   </div>
 </template>
-<template id="rtf-r8p-as-seen-on-betanews">
-  <div>
-    As seen on <a class="cpl-link" href="https://betanews.com/2025/01/31/transform-windows-10-or-11-into-windows-7-in-just-five-clicks/">Betanews</a>!
+<template id="rtf-vistausp3">
+  <div style="width: 100%; padding-left: 24px;">
+    <p>If you're still using Windows Vista, you might have concerns about security updates, which were officially stopped in 2017. Microsoft does, however, still make official updates for Windows Vista based operating systems. This Windows Vista unofficial Service Pack 3 allows these updates to be installed on Windows Vista, to keep your PC secure until 2026.</p>
   </div>
 </template>
-<template id="rtf-privacy">
-We don’t collect any information about you, your device, your usage of this site, or anything else.
+<template id="rtf-rdpconfig-info">
+  <p>Remote Desktop can be useful if you need to access one of your devices from a remote location, to assist someone in fixing a computer problem, or access an app from another device. This RDP Configurator enables you to easily set up remote desktop on any edition of Windows, with support for tunnels and concurrent sessions. It works on all editions of Windows&nbsp;7, 8, 8.1, 10 and 11. Once downloaded, guidance for setting it up can be found in the video below.</p>
+</template>
+<template id="rtf-site-info">
+  <p>
+    <img src="/icons/screenshots/xp.png" style="float: left; padding-right: 32px;" width="360">
+    <span>The Tech Stuff journey began with an avid interest in older style games and operating systems, which offered so much more than their newer variants. From this enthusiasm for older style tech, came the realisation that, just because something was shiny and new, extensively marketed and theoretically popular, didn’t necessarily mean it was better.</span>
+    <br><br>
+    <span>Flash games, which achieved peak popularity during the 2000s, were simple yet exciting, very accessible, quick to pick up and put down, and brought an explosion of creativity and innovation from budding independent developers. In contrast, HTML5 games came with large download sizes, and were typically slow, buggy, and complicated.</span>
+  </p>
+  <p>
+    <img src="/icons/screenshots/vista.png" style="float: right; padding-left: 32px;" width="360">
+    <span>A similar pattern was emerging with operating systems, with newer versions clearly not focusing on the interests of typical users. Whilst older OSs like Windows&nbsp;7 were simple and clean, visually appealing and came without tracking, Microsoft’s more recent offerings had become unnecessarily complex, and included unwelcome tracking and preinstalled bloatware, insisting on the setting up of a Microsoft account to hold personal data.</span>
+    <br><br>
+    <span>Aware of the downsides to these modern technology trends, a new pathway emerged, which involved looking at how the superior yet older computer games, functions and interfaces could be restored. This laid the foundation for a programmer and software developer now inspired to create tools to improve and simplify things.</span>
+  </p>
+  <p>
+    <img src="/icons/screenshots/w7.png" style="float: left; padding-right: 32px; padding-bottom: 96px;" width="360">
+    <span>So began the next stage of the journey, developing tools which restored these older, more functional designs. One of the earlier projects was to restore internet explorer and flash player on Windows 11, with subsequent projects including ‘upgrading’ from Windows 11 to 10, getting security updates for Windows&nbsp;7 after the official end of support, and the automated, customisable transformation pack, Revert8Plus.</span>
+    <br><br>
+    <span>At the moment, there are several new projects being developed, alongside continued work on Revert8Plus, with many more innovative tools planned for the near future. The project news section on the home page details the latest updates and improvements to these, so check back regularly to keep up to date! The YouTube videos, which demonstrate these projects as they are released, are typically premiered, so if you want interesting and helpful ways to simplify and enhance your PC, then do subscribe to the channel. Finally, if you cannot find what you are looking for on the website or YouTube channel, then just get in touch.</span>
+  </p>
+</template>
+<template id="rtf-r8p-history">
+  <p>Revert8Plus happened by chance, beginning with the creation of a script to install programs and configure settings. This script saved time, when frequently having to reinstall Windows. After lots of customisation tweaks, it appeared that the computer was looking increasingly like Windows&nbsp;7, which was brilliant!</p>
+  <p>With further tweaks, the script continued to be updated, resulting in the emergence of a Windows&nbsp;7 transformation pack. At the time, aware of no similar tool that could automate the process of making a computer look like Windows&nbsp;7, the obvious next step was to publish the project, and so Revert8Plus was born!</p>
+  <p>Since its initial release in February 2024, Revert8Plus has been completely re-written from the ground up, with each subsequent version seeing significant improvements. It has been simplified and has enhanced performance, along with having many more features and being more customisable.</p>
+  <p>As ever, there are always more improvements being discovered, so Revert8Plus will continue to be developed for the foreseeable future.</p>
+</template>
+<template id="rtf-privacy-policy">
+  <div class="large-headings">
+    <h1>Privacy Policy</h1>
+    <p>This privacy notice tells you what we do with your information.</p>
+    <h2>Contact details</h2>
+    <p>Email: <a href="mailto:webdoc@teknixstuff.com">webdoc@teknixstuff.com</a></p>
+    <h2>Data we collect, use, and why</h2>
+    <p>We collect or use the following information for research or archiving purposes:</p>
+    <ul>
+      <li>
+        <p>Website usage statistics, including but not limited to:</p>
+        <ul>
+          <li>Number of users visiting the site</li>
+          <li>Average number of pages visited on the site per user</li>
+          <li>Number of downloads of files from the site</li>
+        </ul>
+      </li>
+    </ul>
+    <h2>Collection of personal information</h2>
+    <p>No. Your personal information is never collected or stored.</p>
+    <h2>Storage of information</h2>
+    <p>Website usage statistics are kept indefinitely.</p>
+  </div>
+</template>
+<template id="rtf-home-footer">
+  <a href="/Privacy%20Policy/">Privacy Policy</a>
 </template>
 
-<div id="command-bar"><a id="menu-toggle" href="javascript:undefined">Menu</a></div>
+<div id="command-bar"><a id="menu-toggle" href="javascript:undefined">Menu</a><a id="ui-toggle" href="javascript:undefined">UI</a></div>
 <div id="vertical-pane-content">
-  <div id="left-container">
-    <div id="navigation-pane" tabindex="0"><details open="" class=""><summary><a href="/Favorites/"></a><div><span class="bullet"></span><a href="/Favorites/"><img src="/icons/16x16/favorites.png"><span class="name">Favorites</span></a></div></summary><details class="leaf"><summary><a href="/Favorites/Desktop/"></a><div><span class="bullet"></span><a href="/Favorites/Desktop/"><img src="/icons/16x16/desktop.png"><span class="name">Desktop</span></a></div></summary></details><details class="leaf"><summary><a href="/Favorites/Downloads/"></a><div><span class="bullet"></span><a href="/Favorites/Downloads/"><img src="/icons/16x16/downloads.png"><span class="name">Downloads</span></a></div></summary></details><details class="leaf"><summary><a href="/Favorites/Home/"></a><div><span class="bullet"></span><a href="/Favorites/Home/"><img src="/icons/16x16/help.png"><span class="name">Home</span></a></div></summary></details></details><details open="" class=""><summary><a href="/Libraries/"></a><div><span class="bullet"></span><a href="/Libraries/"><img src="/icons/16x16/libraries.png"><span class="name">Libraries</span></a></div></summary><details open="" class=""><summary><a href="/Libraries/Projects/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/"><img src="/icons/16x16/documents.png"><span class="name">Projects</span></a></div></summary><details class="leaf"><summary><a href="/Libraries/Projects/Revert8Plus/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Revert8Plus/"><img src="/icons/16x16/r8p.png"><span class="name">Revert8Plus</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/Unofficial Service Packs/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Unofficial Service Packs/"><img src="/icons/16x16/update.png"><span class="name">Unofficial Service Packs</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/Pale Moon add-ons/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Pale Moon add-ons/"><img src="/icons/16x16/palemoon.png"><span class="name">Pale Moon add-ons</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/RDP Configurator/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/RDP Configurator/"><img src="/icons/16x16/rdp.png"><span class="name">RDP Configurator</span></a></div></summary></details></details><details class="leaf"><summary><a href="/Libraries/Music/"></a><div><span class="bullet"></span><a href="/Libraries/Music/"><img src="/icons/16x16/music.png"><span class="name">Music</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Pictures/"></a><div><span class="bullet"></span><a href="/Libraries/Pictures/"><img src="/icons/16x16/pictures.png"><span class="name">Pictures</span></a></div></summary></details><details open="" class=""><summary><a href="/Libraries/Videos/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/"><img src="/icons/16x16/videos.png"><span class="name">Videos</span></a></div></summary><details class="leaf"><summary><a href="/Libraries/Videos/Revert8Plus v4_ Transform Windows 10 or 11 into Windows 7, in only 5 clicks!/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Revert8Plus v4_ Transform Windows 10 or 11 into Windows 7, in only 5 clicks!/"><img src="/icons/16x16/video.png"><span class="name">Revert8Plus v4: Transform Windows 10 or 11 into Windows 7, in only 5 clicks!</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Videos/Classic2010_ restoring old website UIs/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Classic2010_ restoring old website UIs/"><img src="/icons/16x16/video.png"><span class="name">Classic2010: restoring old website UIs</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Videos/Windows 7 Unofficial Service Pack 3/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Windows 7 Unofficial Service Pack 3/"><img src="/icons/16x16/video.png"><span class="name">Windows 7 Unofficial Service Pack 3</span></a></div></summary></details></details></details><details open="" class="leaf"><summary><a href="/HomeGroup/"></a><div><span class="bullet"></span><a href="/HomeGroup/"><img src="/icons/16x16/homegroup.png"><span class="name">HomeGroup</span></a></div></summary></details><details open="" class=""><summary><a href="/Computer/"></a><div><span class="bullet"></span><a href="/Computer/"><img src="/icons/16x16/computer.png"><span class="name">Computer</span></a></div></summary><details class="" open=""><summary><a href="/Computer/Windows (C_)/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/"><img src="/icons/16x16/windrive.png"><span class="name">Windows (C:)</span></a></div></summary><details class="leaf"><summary><a href="/Computer/Windows (C_)/Program Files/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Program Files/"><img src="/icons/16x16/folder.png"><span class="name">Program Files</span></a></div></summary></details><details class="leaf"><summary><a href="/Computer/Windows (C_)/Program Files (x86)/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Program Files (x86)/"><img src="/icons/16x16/folder.png"><span class="name">Program Files (x86)</span></a></div></summary></details><details class="leaf active"><summary><a href="/Computer/Windows (C_)/User/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/User/"><img src="/icons/16x16/folder.png"><span class="name">User</span></a></div></summary></details><details class="leaf"><summary><a href="/Computer/Windows (C_)/Windows/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Windows/"><img src="/icons/16x16/folder.png"><span class="name">Windows</span></a></div></summary></details></details><details class="leaf"><summary><a href="/Computer/Data (E_)/"></a><div><span class="bullet"></span><a href="/Computer/Data (E_)/"><img src="/icons/16x16/fixeddrive.png"><span class="name">Data (E:)</span></a></div></summary></details></details><details class="leaf"><summary><a href="/Network/"></a><div><span class="bullet"></span><a href="/Network/"><img src="/icons/16x16/network.png"><span class="name">Network</span></a></div></summary></details></div>
+  <div id="left-container" class="accordian">
+    <div id="navigation-pane" tabindex="0" class="accordian"><details open="" class="container"><summary><a href="/Favorites/"></a><div><span class="bullet"></span><a href="/Favorites/"><img src="/icons/16x16/favorites.png"><span class="name">Favorites</span></a></div></summary><details class="leaf group"><summary><a href="/Favorites/Home/"></a><div><span class="bullet"></span><a href="/Favorites/Home/"><img src="/icons/16x16/help.png"><span class="name">Home</span></a></div></summary></details><details class="hidden" open=""><summary><a href="/Favorites/Desktop/"></a><div><span class="bullet"></span><a href="/Favorites/Desktop/"><img src="/icons/16x16/desktop.png"><span class="name">Desktop</span></a></div></summary><details class="leaf"><summary><a href="/Favorites/Desktop/About/"></a><div><span class="bullet"></span><a href="/Favorites/Desktop/About/"><img src="/icons/16x16/desktop.png"><span class="name">About</span></a></div></summary></details></details><details class="leaf hidden group"><summary><a href="/Favorites/Downloads/"></a><div><span class="bullet"></span><a href="/Favorites/Downloads/"><img src="/icons/16x16/downloads.png"><span class="name">Downloads</span></a></div></summary></details></details><details open="" class="container"><summary><a href="/Libraries/"></a><div><span class="bullet"></span><a href="/Libraries/"><img src="/icons/16x16/libraries.png"><span class="name">Libraries</span></a></div></summary><details open="" class="group"><summary><a href="/Libraries/Projects/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/"><img src="/icons/16x16/documents.png"><span class="name">Projects</span></a></div></summary><details class="leaf"><summary><a href="/Libraries/Projects/Revert8Plus/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Revert8Plus/"><img src="/icons/16x16/r8p.png"><span class="name">Revert8Plus</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/Pale Moon add-ons/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Pale Moon add-ons/"><img src="/icons/16x16/palemoon.png"><span class="name">Pale Moon add-ons</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/Unofficial Service Packs/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/Unofficial Service Packs/"><img src="/icons/16x16/update.png"><span class="name">Unofficial Service Packs</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Projects/RDP Configurator/"></a><div><span class="bullet"></span><a href="/Libraries/Projects/RDP Configurator/"><img src="/icons/16x16/rdp.png"><span class="name">RDP Configurator</span></a></div></summary></details></details><details class="leaf hidden"><summary><a href="/Libraries/Music/"></a><div><span class="bullet"></span><a href="/Libraries/Music/"><img src="/icons/16x16/music.png"><span class="name">Music</span></a></div></summary></details><details class="leaf hidden"><summary><a href="/Libraries/Pictures/"></a><div><span class="bullet"></span><a href="/Libraries/Pictures/"><img src="/icons/16x16/pictures.png"><span class="name">Pictures</span></a></div></summary></details><details open="" class="group"><summary><a href="/Libraries/Videos/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/"><img src="/icons/16x16/videos.png"><span class="name">Videos</span></a></div></summary><details class="leaf"><summary><a href="/Libraries/Videos/Revert8Plus v4_ Transform Windows 10 or 11 into Windows&nbsp;7, in only 5 clicks!/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Revert8Plus v4_ Transform Windows 10 or 11 into Windows&nbsp;7, in only 5 clicks!/"><img src="/icons/16x16/video.png"><span class="name">Revert8Plus v4: Transform Windows 10 or 11 into Windows&nbsp;7, in only 5 clicks!</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Videos/Classic2010_ restoring old website UIs/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Classic2010_ restoring old website UIs/"><img src="/icons/16x16/video.png"><span class="name">Classic2010: restoring old website UIs</span></a></div></summary></details><details class="leaf"><summary><a href="/Libraries/Videos/Windows&nbsp;7 Unofficial Service Pack 3/"></a><div><span class="bullet"></span><a href="/Libraries/Videos/Windows&nbsp;7 Unofficial Service Pack 3/"><img src="/icons/16x16/video.png"><span class="name">Windows&nbsp;7 Unofficial Service Pack 3</span></a></div></summary></details></details></details><details open="" class="leaf hidden"><summary><a href="/HomeGroup/"></a><div><span class="bullet"></span><a href="/HomeGroup/"><img src="/icons/16x16/homegroup.png"><span class="name">HomeGroup</span></a></div></summary></details><details open="" class="hidden"><summary><a href="/Computer/"></a><div><span class="bullet"></span><a href="/Computer/"><img src="/icons/16x16/computer.png"><span class="name">Computer</span></a></div></summary><details class="" open=""><summary><a href="/Computer/Windows (C_)/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/"><img src="/icons/16x16/windrive.png"><span class="name">Windows (C:)</span></a></div></summary><details class="leaf"><summary><a href="/Computer/Windows (C_)/Program Files/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Program Files/"><img src="/icons/16x16/folder.png"><span class="name">Program Files</span></a></div></summary></details><details class="leaf"><summary><a href="/Computer/Windows (C_)/Program Files (x86)/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Program Files (x86)/"><img src="/icons/16x16/folder.png"><span class="name">Program Files (x86)</span></a></div></summary></details><details class="leaf active"><summary><a href="/Computer/Windows (C_)/User/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/User/"><img src="/icons/16x16/folder.png"><span class="name">User</span></a></div></summary></details><details class="leaf"><summary><a href="/Computer/Windows (C_)/Windows/"></a><div><span class="bullet"></span><a href="/Computer/Windows (C_)/Windows/"><img src="/icons/16x16/folder.png"><span class="name">Windows</span></a></div></summary></details></details><details class="leaf"><summary><a href="/Computer/Data (E_)/"></a><div><span class="bullet"></span><a href="/Computer/Data (E_)/"><img src="/icons/16x16/fixeddrive.png"><span class="name">Data (E:)</span></a></div></summary></details></details><details open="" class="hidden"><summary><a href="/Network/"></a><div><span class="bullet"></span><a href="/Network/"><img src="/icons/16x16/network.png"><span class="name">Network</span></a></div></summary><details class="leaf"><summary><a href="/Network/Donate/"></a><div><span class="bullet"></span><a href="/Network/Donate/"><img src="/icons/16x16/buymeacoffee.png"><span class="name">Donate</span></a></div></summary></details></details><details class="leaf group"><summary><a href="/About/"></a><div><span class="bullet"></span><a href="/About/"><img src="/icons/16x16/desktop.png"><span class="name">About</span></a></div></summary></details><details open="" class="group"><summary><a href="/Contact/"></a><div><span class="bullet"></span><a href="/Contact/"><img src="/icons/16x16/network.png"><span class="name">Contact</span></a></div></summary><details class="leaf"><summary><a href="/Contact/Youtube/"></a><div><span class="bullet"></span><a href="/Contact/Youtube/"><img src="/icons/16x16/youtube.png"><span class="name">Youtube</span></a></div></summary></details><details class="leaf"><summary><a href="/Contact/Discord/"></a><div><span class="bullet"></span><a href="/Contact/Discord/"><img src="/icons/16x16/discord.png"><span class="name">Discord</span></a></div></summary></details><details class="leaf"><summary><a href="/Contact/GitHub/"></a><div><span class="bullet"></span><a href="/Contact/GitHub/"><img src="/icons/16x16/github.png"><span class="name">GitHub</span></a></div></summary></details><details class="leaf"><summary><a href="/Contact/Twitter/"></a><div><span class="bullet"></span><a href="/Contact/Twitter/"><img src="/icons/16x16/twitter.png"><span class="name">Twitter</span></a></div></summary></details><details class="leaf"><summary><a href="/Contact/Email/"></a><div><span class="bullet"></span><a href="/Contact/Email/"><img src="/icons/16x16/mail.png"><span class="name">Email</span></a></div></summary></details></details><details class="leaf group"><summary><a href="/Donate/"></a><div><span class="bullet"></span><a href="/Donate/"><img src="/icons/16x16/buymeacoffee.png"><span class="name">Donate</span></a></div></summary></details></div>
   </div>
-  <div id="contents-pane" tabindex="0" type="folder"></div>
+  <div id="contents-pane" tabindex="0" class="content-pane" type="folder"></div>
 </div>
 <div id="details-pane">
 </div></body></html>
