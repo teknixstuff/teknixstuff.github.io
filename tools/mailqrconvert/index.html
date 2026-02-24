@@ -1,0 +1,171 @@
+<title>Return QR code converter</title>
+<meta charset="utf-8">
+<script src="datamatrix.js"></script>
+<script src="JsBarcode.code128.min.js"></script>
+<script src="jsqrcode.js"></script>
+<script>
+function decodeQR(uri) {
+  return new Promise(resolve=>{
+    qrcode.callback = resolve;
+    qrcode.decode(uri);
+  });
+}
+
+function setStatus(text) {
+  document.getElementById("status").textContent = text;
+}
+
+async function run() {
+  let qruri = URL.createObjectURL(document.getElementById("qr").files[0]);
+  let qrstr = await decodeQR(qruri);
+  if (!qrstr) {
+    setStatus("QR code not found");
+    return;
+  }
+  setStatus("QR code decoded");
+  let qrobj = {};
+  qrstr.split("|").forEach(pair=>{
+    qrobj[pair.split("=")[0]] = pair.split("=")[1];
+  });
+  setStatus("QR parsed");
+  if (qrobj["Label"] != 2) {
+    setStatus("Label type not equal to 2");
+    return;
+  }
+  JsBarcode("#barcode", qrobj["1DBarcode"]);
+  setStatus("Barcode rendered");
+  let matrixelem = document.getElementById("datamatrix");
+  matrixelem.innerHTML = "";
+  matrixsvg = DATAMatrix({dim: 128, msg: qrobj["QRCode"]});
+  matrixelem.appendChild(matrixsvg);
+  setStatus("Data matrix rendered");
+  document.getElementById("addr").textContent = qrobj["SendersDetails"];
+  setStatus("Ready");
+}
+</script>
+<style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif;
+}
+#addr {
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+  width: 70ch;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-bottom: 4px solid black;
+  font-weight: bold;
+  font-size: 16px;
+  height: 112px;
+  padding: 16px;
+}
+#out {
+  //border: 4px solid black;
+  display: inline-flex;
+  flex-direction: column;
+}
+#header {
+  height: 160px;
+  display: flex;
+  flex-direction: row;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+}
+#type {
+  font-size: 64px;
+  font-weight: bold;
+  margin: 8px 24px;
+  margin-bottom: auto;
+}
+#time {
+  font-size: 64px;
+  font-weight: bold;
+  margin: 8px 24px;
+  margin-top: auto;
+}
+#info {
+  margin: 8px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#info-by {
+  text-align: center;
+}
+#info-acc {
+  margin-top: auto;
+}
+#content {
+  display: flex;
+  flex-direction: row;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-bottom: 4px solid black;
+  justify-content: space-evenly;
+  padding-top: 64px;
+  padding-bottom: 4px;
+}
+#footer {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 8px 24px;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-bottom: 4px solid black;
+}
+#notebox {
+  height: 160px;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-bottom: 4px solid black;
+}
+#details {
+  outline: none;
+  margin-top: 64px;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  height: 112px;
+  padding: 16px;
+  resize: none;
+}
+@media print {
+  #status, #qr, #print {
+    display: none;
+  }
+}
+</style>
+<input type="file" id="qr" onchange="run()"><button onclick="print()" id="print">Print</button>
+<div id="status">Ready</div>
+<br>
+<div id="out">
+  <div id="header">
+    <div id="type">Tracked</div>
+    <div id="time">48</div>
+    <div id="info">
+      <div id="info-by">Delivered by</div>
+      <img id="info-logo" src="royal-mail-logo.png" width=72" height="72">
+      <div id="info-acc">Postage on Account GB</div>
+    </div>
+  </div>
+  <div id="content">
+    <div id="datamatrix"></div>
+    <img id="barcode">
+  </div>
+  <div id="addr"></div>
+  <div id="footer">
+    Post Office - scan the above right barcode
+  </div>
+  <div id="notebox">
+  </div>
+  <textarea placeholder="Details..." id="details"></textarea>
+</div>
